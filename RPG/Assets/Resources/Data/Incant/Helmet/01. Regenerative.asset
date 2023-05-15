@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54249603f92f3df4fbafee5d872a5c46, type: 3}
+  m_Name: 01. Regenerative
+  m_EditorClassIdentifier: 
+  ID: 201
+  className: Regenerative
+  incantType: 1
+  itemType: 3
+  incantTier: 2
+  incantName: "\uC7AC\uC0DD "
+  isIncantAbility: 1
+  abilityDesc: "\uC561\uD2F0\uBE0C \uC2A4\uD0AC : \uC0AC\uC6A9 \uC2DC \uCCB4\uB825\uC744
+    100 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  abilityIcon: {fileID: 21300000, guid: 9368da30495f648499d95d0250db71f2, type: 3}
+  hpPoint: 0
+  defencePoint: 0
+  decreseCriticalDamage: 0
+  evasionCritical: 0

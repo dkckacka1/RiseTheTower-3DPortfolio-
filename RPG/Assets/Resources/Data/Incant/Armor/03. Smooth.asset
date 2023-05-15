@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03b3191d1591764cba5b7a38806c1b0, type: 3}
+  m_Name: 03. Smooth
+  m_EditorClassIdentifier: 
+  ID: 103
+  className: Smooth
+  incantType: 0
+  itemType: 1
+  incantTier: 0
+  incantName: "\uBD80\uB4DC\uB7EC\uC6B4 "
+  isIncantAbility: 0
+  abilityDesc: 
+  abilityIcon: {fileID: 0}
+  hpPoint: -50
+  defencePoint: 0
+  movementSpeed: 1
+  evasionPoint: 0

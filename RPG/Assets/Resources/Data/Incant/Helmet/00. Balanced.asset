@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54249603f92f3df4fbafee5d872a5c46, type: 3}
+  m_Name: 00. Balanced
+  m_EditorClassIdentifier: 
+  ID: 200
+  className: Balanced
+  incantType: 0
+  itemType: 3
+  incantTier: 0
+  incantName: "\uADE0\uD615\uC758 "
+  isIncantAbility: 0
+  abilityDesc: 
+  abilityIcon: {fileID: 0}
+  hpPoint: 0
+  defencePoint: 0
+  decreseCriticalDamage: 0.3
+  evasionCritical: 0.3

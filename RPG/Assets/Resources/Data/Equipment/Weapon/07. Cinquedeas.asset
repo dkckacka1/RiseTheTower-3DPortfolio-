@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02870ff26392ae64680fe1f5d28e2701, type: 3}
+  m_Name: 07. Cinquedeas
+  m_EditorClassIdentifier: 
+  ID: 107
+  EquipmentName: "\uC2F1\uCFE0\uB514\uC544"
+  equipmentType: 0
+  equipmentTier: 1
+  equipmentSprite: {fileID: 21300000, guid: b2b7c62caa1024c48b06b2fce64b2886, type: 3}
+  description: "\uB0A0\uC774 \uAD6C\uBD88\uAD6C\uBD88\uD558\uAC8C \uC0DD\uAE34 \uB2E8\uAC80\uC774\uB2E4."
+  weaponApparenceID: 4
+  attackDamage: 18
+  attackSpeed: 2.5
+  attackRange: 1.8
+  movementSpeed: 4
+  criticalChance: 0.5
+  criticalDamage: 0.5
+  attackChance: 1
+  weaponHandleType: 0

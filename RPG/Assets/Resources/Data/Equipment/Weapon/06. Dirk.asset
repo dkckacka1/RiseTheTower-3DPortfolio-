@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02870ff26392ae64680fe1f5d28e2701, type: 3}
+  m_Name: 06. Dirk
+  m_EditorClassIdentifier: 
+  ID: 106
+  EquipmentName: "\uB354\uD06C"
+  equipmentType: 0
+  equipmentTier: 0
+  equipmentSprite: {fileID: 21300000, guid: 8105de2807df873429c987c911d0f2a3, type: 3}
+  description: "\uB0A0\uB05D \uBD80\uBD84\uC758 \uCE7C\uB4F1\uC5D0 \uC57D\uAC04 \uB0A0\uC774
+    \uC138\uC6CC\uC9C4 \uBB34\uAE30\uC774\uB2E4."
+  weaponApparenceID: 4
+  attackDamage: 11
+  attackSpeed: 1.5
+  attackRange: 2
+  movementSpeed: 3
+  criticalChance: 0.7
+  criticalDamage: 0.3
+  attackChance: 0.9
+  weaponHandleType: 0

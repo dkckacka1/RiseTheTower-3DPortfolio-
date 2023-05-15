@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132b7214b83981a449bd58df93d6595e, type: 3}
+  m_Name: 04. Scale Mail
+  m_EditorClassIdentifier: 
+  ID: 204
+  EquipmentName: "\uC2A4\uCF00\uC77C \uBA54\uC77C"
+  equipmentType: 1
+  equipmentTier: 1
+  equipmentSprite: {fileID: 21300000, guid: 70951a5c6bc1d4e488b866d9f156897f, type: 3}
+  description: 
+  defencePoint: 10
+  hpPoint: 400
+  movementSpeed: 0.25
+  evasionPoint: 0.1

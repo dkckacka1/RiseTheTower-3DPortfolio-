@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02870ff26392ae64680fe1f5d28e2701, type: 3}
+  m_Name: 08. Bone Knife
+  m_EditorClassIdentifier: 
+  ID: 108
+  EquipmentName: "\uBCF8 \uB098\uC774\uD504"
+  equipmentType: 0
+  equipmentTier: 1
+  equipmentSprite: {fileID: 21300000, guid: ef6c25a40a86e6447877250772f80b5d, type: 3}
+  description: "\uBF08\uB97C \uAC08\uC544\uC11C \uB9CC\uB4E0 \uB2E8\uAC80\uC774\uB2E4."
+  weaponApparenceID: 4
+  attackDamage: 27
+  attackSpeed: 1.8
+  attackRange: 2
+  movementSpeed: 4
+  criticalChance: 0.3
+  criticalDamage: 0.3
+  attackChance: 1
+  weaponHandleType: 0

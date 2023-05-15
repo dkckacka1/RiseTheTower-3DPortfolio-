@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132b7214b83981a449bd58df93d6595e, type: 3}
+  m_Name: 01. IronARmor
+  m_EditorClassIdentifier: 
+  ID: 201
+  EquipmentName: "\uCCA0 \uAC11\uC637"
+  equipmentType: 1
+  equipmentTier: 0
+  equipmentSprite: {fileID: 21300000, guid: 3c365a009f0bc0b41a67a49a31e5dfb4, type: 3}
+  description: "\uCCA0\uB85C \uB9CC\uB4E0 \uBB34\uAC70\uC6B4 \uAC11\uC637\uC785\uB2C8\uB2E4."
+  defencePoint: 20
+  hpPoint: 120
+  movementSpeed: 0
+  evasionPoint: 0

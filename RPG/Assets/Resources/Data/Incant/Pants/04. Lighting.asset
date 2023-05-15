@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3777657bc4020d43a36522b62ba1ed7, type: 3}
+  m_Name: 04. Lighting
+  m_EditorClassIdentifier: 
+  ID: 304
+  className: Lighting
+  incantType: 1
+  itemType: 2
+  incantTier: 2
+  incantName: "\uBC88\uAC1C"
+  isIncantAbility: 1
+  abilityDesc: "\uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uC801\uC744 \uD3EC\uD568\uD558\uC5EC
+    4\uBA85\uAE4C\uC9C0 \uBC88\uAC1C\uB97C \uB0B4\uB9AC\uCE69\uB2C8\uB2E4."
+  abilityIcon: {fileID: 21300000, guid: 4c9c797a3b0e90b45b48b9a0a71b56e9, type: 3}
+  hpPoint: 0
+  defencePoint: 0
+  movementSpeed: 0

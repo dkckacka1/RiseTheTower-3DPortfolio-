@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be1ee78267dee74a984f6c6e4d28d30, type: 3}
+  m_Name: 00. LeatherHelmet
+  m_EditorClassIdentifier: 
+  ID: 300
+  EquipmentName: "\uAC00\uC8FD \uD22C\uAD6C"
+  equipmentType: 3
+  equipmentTier: 0
+  equipmentSprite: {fileID: 21300000, guid: eb03f657c043b2041af845d4dce8ed9c, type: 3}
+  description: "\uAC00\uC8FD\uC73C\uB85C \uB9CC\uB4E0 \uD3C9\uBC94\uD55C \uD22C\uAD6C\uC785\uB2C8\uB2E4."
+  defencePoint: 5
+  hpPoint: 25
+  decreseCriticalDamage: 0
+  evasionCritical: 0.1

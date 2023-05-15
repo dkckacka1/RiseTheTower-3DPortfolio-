@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be1ee78267dee74a984f6c6e4d28d30, type: 3}
+  m_Name: 07. Winged Helm
+  m_EditorClassIdentifier: 
+  ID: 307
+  EquipmentName: "\uC719\uB4DC \uD5EC\uB984"
+  equipmentType: 3
+  equipmentTier: 2
+  equipmentSprite: {fileID: 21300000, guid: 0bcce98e6ef1c4141af9da9f4faa098a, type: 3}
+  description: 
+  defencePoint: 15
+  hpPoint: 300
+  decreseCriticalDamage: 0.2
+  evasionCritical: 0
