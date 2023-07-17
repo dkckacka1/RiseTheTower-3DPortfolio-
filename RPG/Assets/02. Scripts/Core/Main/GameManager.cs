@@ -8,11 +8,15 @@ using RPG.Character.Status;
 using RPG.Battle.Core;
 using RPG.Battle.Ability;
 
+/*
+ * 게임을 전체적으로 관리해주는 매니저 클래스
+ */
+
 namespace RPG.Core
 {
     public class GameManager : MonoBehaviour
     {
-        // Singletone
+        // 싱글톤 클래스 정의
         private static GameManager instance;
         public static GameManager Instance
         {
@@ -28,13 +32,10 @@ namespace RPG.Core
             }
         }
 
-
-
-        // Info
-        private UserInfo userInfo;
-        [SerializeField] PlayerStatus player;
-        public ConfigureData configureData;
-        public int choiceStageID;
+        private UserInfo userInfo;              // 게임의 유저 정보
+        [SerializeField] PlayerStatus player;   // 게임 플레이할 캐릭터
+        public ConfigureData configureData;     // 게임 환경설정 데이터
+        public int choiceStageID;               // 유저가 선택한 스테이지 ID
 
         // Encapsule
         public UserInfo UserInfo
@@ -66,21 +67,12 @@ namespace RPG.Core
         }
 
         #region DIC
-        //Stage
-        public Dictionary<int, StageData> stageDataDic = new Dictionary<int, StageData>();
-
-        // Enemy
-        public Dictionary<int, EnemyData> enemyDataDic = new Dictionary<int, EnemyData>();
-
-        // Equipment
-        public Dictionary<int, EquipmentData> equipmentDataDic = new Dictionary<int, EquipmentData>();
-        public Dictionary<int, Incant> incantDic = new Dictionary<int, Incant>();
-
-        // Skill
-        public Dictionary<int, Ability> abilityPrefabDic = new Dictionary<int, Ability>();
-
-        // Audio
-        public Dictionary<string, AudioClip> audioDic = new Dictionary<string, AudioClip>();
+        public Dictionary<int, StageData> stageDataDic = new Dictionary<int, StageData>();              // 스테이지 정보 Dic
+        public Dictionary<int, EnemyData> enemyDataDic = new Dictionary<int, EnemyData>();              // 적 정보 Dic
+        public Dictionary<int, EquipmentData> equipmentDataDic = new Dictionary<int, EquipmentData>();  // 장비 아이템 데이터 Dic
+        public Dictionary<int, Incant> incantDic = new Dictionary<int, Incant>();                       // 장비 인챈트 Dic
+        public Dictionary<int, Ability> abilityPrefabDic = new Dictionary<int, Ability>();              // 스킬 이펙트 Dic
+        public Dictionary<string, AudioClip> audioDic = new Dictionary<string, AudioClip>();            // 오디오 Dic
         #endregion
 
         [Header("TEST")]
@@ -88,6 +80,7 @@ namespace RPG.Core
 
         private void Awake()
         {
+            // 싱글톤 클래스 작업
             if (instance == null)
             {
                 instance = this;
@@ -99,10 +92,13 @@ namespace RPG.Core
 
             DontDestroyOnLoad(this.gameObject);
 
+            // 게임 기본 프레임 설정
             Application.targetFrameRate = 60;
 
             if (isTest)
+                // 만약 테스트 중이라면
             {
+                // 바로 게임데이터를 로드하고 신규 유저 생성, 캐릭터 생성, 환경설정 데이터까지 새로 만든다.
                 DataLoad();
 
                 this.userInfo = CreateUserInfo();
@@ -111,6 +107,7 @@ namespace RPG.Core
             }
         }
 
+        // 모든 데이터를 로드합니다.
         public void DataLoad()
         {
             ResourcesLoader.LoadEquipmentData(ref equipmentDataDic);
@@ -122,15 +119,18 @@ namespace RPG.Core
         }
 
         #region UserInfo
+        // 새로운 유저 정보를 생성합니다.
         public UserInfo CreateUserInfo()
         {
             UserInfo userInfo = new UserInfo();
+            // 기본 자원을 줍니다.
             userInfo.itemReinforceTicket = 10;
             userInfo.itemIncantTicket = 10;
             userInfo.itemGachaTicket = 10;
             userInfo.risingTopCount = 1;
             userInfo.energy = 0;
             
+            // 캐릭터가 기본적으로 착용할 장비 데이터입니다.
             userInfo.lastedWeaponID = 100;
             userInfo.weaponReinforceCount = 0;
             userInfo.weaponPrefixIncantID = -1;
@@ -155,18 +155,22 @@ namespace RPG.Core
         }
         #endregion
 
+        // 장비 아이템 데이터를 가져옵니다.
         public bool GetEquipmentData<T>(int id,out T sourceData) where T : EquipmentData
         {
             EquipmentData data;
             if (!equipmentDataDic.TryGetValue(id, out data))
+                // 찾는 ID가 없다면
             {
                 Debug.LogError("찾는 데이터가 없습니다.");
                 sourceData = null;
                 return false;
             }
 
+            // 찾은 데이터를 T 로 변환합니다.
             sourceData = data as T;
             if (sourceData == null)
+                // 변환 값이 없다면
             {
                 Debug.LogError("찾은 데이터가 잘못된 데이터입니다.");
                 return false;

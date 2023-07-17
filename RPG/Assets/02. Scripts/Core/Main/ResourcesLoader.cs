@@ -5,19 +5,24 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 데이터를 불러오는 메서드를 모아놓은 static 클래스 입니다.
+ */
+
 namespace RPG.Core
 {
     public static class ResourcesLoader
     {
-        public const string dataPath = "Data";
-        public const string prefabPath = "Prefab";
-        public const string audioPath = "Audio";
-        public const string equipmentPath = "Equipment";
-        public const string incantPath = "Incant";
-        public const string enemyPath = "Enemy";
-        public const string stagePath = "Stage";
-        public const string skillPath = "Skill";
+        public const string dataPath = "Data";              // 데이터를 찾는 경로
+        public const string prefabPath = "Prefab";          // 프리팹을 찾는 경로
+        public const string audioPath = "Audio";            // 오디오 소스를 찾는 경로
+        public const string equipmentPath = "Equipment";    // 장비데이터를 찾는 경로
+        public const string incantPath = "Incant";          // 인챈트 데이터를 찾는 경로
+        public const string enemyPath = "Enemy";            // 적 데이터를 찾는 경로
+        public const string stagePath = "Stage";            // 스테이지 데이터를 찾는 경로
+        public const string skillPath = "Skill";            // 스킬 데이터를 찾는 경로
 
+        // 장비아이템 데이터를 불러옵니다.
         public static void LoadEquipmentData(ref Dictionary<int, EquipmentData> dic)
         {
             var list = Resources.LoadAll<EquipmentData>(string.Join("/", dataPath, equipmentPath));
@@ -27,6 +32,7 @@ namespace RPG.Core
             }
         }
 
+        [Obsolete]
         public static void LoadEquipmentData(string path, ref Dictionary<int, EquipmentData> dic)
         {
             var list = Resources.LoadAll<EquipmentData>(path);
@@ -36,6 +42,7 @@ namespace RPG.Core
             }
         }
 
+        // 적 데이터를 불러옵니다.
         public static void LoadEnemyData(ref Dictionary<int, EnemyData> dic)
         {
             var enemies = Resources.LoadAll<EnemyData>(string.Join("/", dataPath, enemyPath));
@@ -46,6 +53,8 @@ namespace RPG.Core
             }
         }
 
+        [Obsolete]
+        // 적 데이터를 불러옵니다.
         public static void LoadEnemyData(string path, ref Dictionary<int, EnemyData> dic)
         {
             var enemies = Resources.LoadAll<EnemyData>(path);
@@ -56,6 +65,7 @@ namespace RPG.Core
             }
         }
 
+        // 스테이지 데이터를 불러옵니다.
         public static void LoadStageData(ref Dictionary<int, StageData> dic)
         {
             var items = Resources.LoadAll<StageData>(string.Join("/", dataPath, stagePath));
@@ -65,6 +75,8 @@ namespace RPG.Core
             }
         }
 
+        [Obsolete]
+        // 스테이지 데이터를 불러옵니다.
         public static void LoadStageData(string path, ref Dictionary<int, StageData> dic)
         {
             var items = Resources.LoadAll<StageData>(path);
@@ -74,6 +86,7 @@ namespace RPG.Core
             }
         }
 
+        // 인챈트 데이터를 로드합니다.
         public static void LoadIncant(ref Dictionary<int, Incant> dic)
         {
             var list = Resources.LoadAll<IncantData>(string.Join("/", dataPath, incantPath));
@@ -85,6 +98,7 @@ namespace RPG.Core
                 {
                     Incant instance = null;
                     switch (incantData.itemType)
+                        // 각 인챈트 데이터의 장비타입으로 알맞는 인챈트 클래스를 생성합니다.
                     {
                         case EquipmentItemType.Weapon:
                             instance = new WeaponIncant(incantData as WeaponIncantData);
@@ -103,6 +117,7 @@ namespace RPG.Core
                     dic.Add(incantData.ID, instance);
                 }
                 else
+                    // 만약 인챈트에 스킬이 붙어있다면 알맞는 자식 클래스로 만들어줍니다.
                 {
                     // 클래스이름 만들기
                     string class_name = $"RPG.Character.Equipment.{incantData.className}_{incantData.itemType}";
@@ -120,6 +135,8 @@ namespace RPG.Core
             }
         }
 
+        [Obsolete]
+        // 인챈트 데이터를 불러옵니다.
         public static void LoadIncant(string path, ref Dictionary<int, Incant> dic)
         {
             var list = Resources.LoadAll<IncantData>(path);
@@ -142,6 +159,8 @@ namespace RPG.Core
             }
         }
 
+
+        // 스킬 이펙트 프리팹을 불러옵니다.
         public static void LoadSkillPrefab(ref Dictionary<int, Ability> dic)
         {
             var skills = Resources.LoadAll<Ability>(string.Join("/", prefabPath, skillPath));
@@ -151,6 +170,8 @@ namespace RPG.Core
             }
         }
 
+        [Obsolete]
+        // 스킬 이펙트 프리팹을 불러옵니다.
         public static void LoadSkillPrefab(string path, ref Dictionary<int, Ability> dic)
         {
             var skills = Resources.LoadAll<Ability>(path);
@@ -160,6 +181,7 @@ namespace RPG.Core
             }
         }
 
+        //오디오 소스를 불러옵니다.
         public static void LoadAudioData(ref Dictionary<string, AudioClip> dic)
         {
             var audios = Resources.LoadAll<AudioClip>(audioPath);
@@ -170,6 +192,8 @@ namespace RPG.Core
             }
         }
 
+        [Obsolete]
+        //오디오 소스를 불러옵니다.
         public static void LoadAudioData(string path, ref Dictionary<string, AudioClip> dic)
         {
             var audios = Resources.LoadAll<AudioClip>(path);
@@ -179,39 +203,5 @@ namespace RPG.Core
                 dic.Add(audio.name, audio);
             }
         }
-
-
-        #region UnUsed
-        public static void LoadIncant2(ref Dictionary<int, Incant> dic)
-        {
-            //int id = 1;
-            //dic.Add(id, new Sharpness_Weapon(id++));
-            //dic.Add(id, new Fast_Weapon(id++));
-            //dic.Add(id, new Heavy_Weapon(id++));
-            //dic.Add(id, new Stone_Weapon(id++));
-            //dic.Add(id, new Hard_Armor(id++));
-            //dic.Add(id, new Smooth_Armor(id++));
-            //dic.Add(id, new Balanced_Helmet(id++));
-            //dic.Add(id, new Spakling_Helmet(id++));
-            //dic.Add(id, new Heavy_Pants(id++));
-            //dic.Add(id, new Quick_Pants(id++));
-            //dic.Add(id, new Regenerative_Armor(id++));
-            //dic.Add(id, new Revenge_Armor(id++));
-
-            //dic.Add(id++, new Sharpness_Weapon());
-            //dic.Add(id++, new Fast_Weapon());
-            //dic.Add(id++, new Heavy_Weapon());
-            //dic.Add(id++, new Stone_Weapon());
-            //dic.Add(id++, new Hard_Armor());
-            //dic.Add(id++, new Smooth_Armor());
-            //dic.Add(id++, new Balanced_Helmet());
-            //dic.Add(id++, new Spakling_Helmet());
-            //dic.Add(id++, new Heavy_Pants());
-            //dic.Add(id++, new Quick_Pants());
-            //dic.Add(id++, new Regenerative_Armor());
-            //dic.Add(id++, new Revenge_Armor());
-        }
-        #endregion
-
     }
 }

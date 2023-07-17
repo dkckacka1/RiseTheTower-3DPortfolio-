@@ -60,7 +60,6 @@ namespace RPG.Main.UI
             this.EnergyText.text = $"{GameManager.Instance.UserInfo.energy}";
         }
 
-        // HACK : TEST
         private void OnGUI()
         {
             if (GUI.Button(new Rect(10, 190, 80, 80), "ÄíÆù Ãß°¡"))
