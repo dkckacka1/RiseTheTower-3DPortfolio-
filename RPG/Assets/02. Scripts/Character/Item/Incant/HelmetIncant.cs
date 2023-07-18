@@ -3,17 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 헬멧에 붙은 인챈트 클래스
+ */
+
 namespace RPG.Character.Equipment
 {
     public class HelmetIncant : Incant
     {
-        public int hpPoint;
-        public int defencePoint;
-        public float decreseCriticalDamage;
-        public float evasionCritical;
+        public int hpPoint;                     // 체력 수치
+        public int defencePoint;                // 방어도 수치
+        public float decreseCriticalDamage;     // 치명타 데미지 감소율
+        public float evasionCritical;           // 회피율
 
-        public float skillCoolTime;
+        public float skillCoolTime;             // 스킬 쿨타입
 
+        // 헬멧 데이터에 따른 생성자
         public HelmetIncant(HelmetIncantData data) : base(data)
         {
             hpPoint = data.hpPoint;
@@ -22,16 +27,19 @@ namespace RPG.Character.Equipment
             evasionCritical = data.evasionCritical;
         }
 
+        // 치명타 공격시 효과
         public virtual void criticalAttackEvent(BattleStatus player, BattleStatus enemy)
         {
             Debug.Log("criticalAttackEvent is Nothing");
         }
 
+        // 헬멧 액티브 스킬
         public virtual void ActiveSkill(BattleStatus player)
         {
             Debug.Log("Helmet ActiveSkill is Nothing");
         }
 
+        // 헬멧 인챈트의 증가 스텟 설명
         public override string GetAddDesc()
         {
             string returnStr = "";
@@ -86,6 +94,7 @@ namespace RPG.Character.Equipment
             return returnStr;
         }
 
+        // 헬멧 인챈트의 감소 스텟 설명
         public override string GetMinusDesc()
         {
             string returnStr = "";

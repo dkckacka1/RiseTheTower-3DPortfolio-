@@ -3,16 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 바지 인챈트의 인챈트 클래스
+ */
+
 namespace RPG.Character.Equipment
 {
     public class PantsIncant : Incant
     {
-        public int hpPoint;
-        public int defencePoint;
-        public float movementSpeed;
+        public int hpPoint;              // 체력 수치
+        public int defencePoint;         // 방어도
+        public float movementSpeed;      // 이동 속도
 
-        public float skillCoolTime;
+        public float skillCoolTime; // 스킬 쿨타임
 
+        // 바지 데이터에 맞는 바지 인챈트 생성자
         public PantsIncant(PantsIncantData data) : base(data)
         {
             hpPoint = data.hpPoint;
@@ -21,16 +26,19 @@ namespace RPG.Character.Equipment
 
     }
 
+        // 이동시 발휘할 효과
         public virtual void MoveEvent(BattleStatus player)
         {
             Debug.Log("MoveEvent is Nothing");
         }
 
+        // 바지 액티브 스킬
         public virtual void ActiveSkill(BattleStatus player)
         {
             Debug.Log("Pants ActiveSkill is Nothing");
         }
 
+        // 바지 인챈트의 증가 스텟 설명
         public override string GetAddDesc()
         {
             string returnStr = "";
@@ -73,6 +81,7 @@ namespace RPG.Character.Equipment
             return returnStr;
         }
 
+        // 바지 인챈트의 감소 스텟 설명
         public override string GetMinusDesc()
         {
             string returnStr = "";

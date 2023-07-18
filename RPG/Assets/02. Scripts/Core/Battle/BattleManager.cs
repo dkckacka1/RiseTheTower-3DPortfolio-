@@ -11,11 +11,15 @@ using RPG.Battle.UI;
 using DG.Tweening;
 using RPG.Main.Audio;
 
+/*
+ * 전투를 관리하는 매니저 클래스
+ */
+
 namespace RPG.Battle.Core
 {
     public class BattleManager : MonoBehaviour
     {
-        // Singletone
+        // 싱글톤 클래스
         public static BattleManager Instance
         {
             get
@@ -57,45 +61,45 @@ namespace RPG.Battle.Core
 
         [Header("BattleCore")]
         // Component
-        public BattleSceneState currentBattleState = BattleSceneState.Default;
-        private static BattleSceneUIManager battleUI;
-        private static ObjectPooling objectPool;
+        public BattleSceneState currentBattleState = BattleSceneState.Default;  // 현재 전투 상태
+        private static BattleSceneUIManager battleUI;                           // 전투 UI 관리 매니저
+        private static ObjectPooling objectPool;                                // 오브젝트 풀
 
 
         [Header("Controller")]
-        public PlayerController livePlayer;
-        public List<EnemyController> liveEnemies = new List<EnemyController>();
+        public PlayerController livePlayer;                                     // 현재 플레이어
+        public List<EnemyController> liveEnemies = new List<EnemyController>(); // 생존한 적군들
 
 
         [Header("Stage")]
-        public int currentStageFloor = 1;
-        public float battleReadyTime = 2f;
-        public float playerCreatePositionXOffset = 15f;
-        public float EnemyCreatePositionXOffset = -18f;
-        public StageFomation stageFomation;
+        public int currentStageFloor = 1;               // 현재 스테이지 층수
+        public float battleReadyTime = 2f;              // 전투 시작 시간
+        public float playerCreatePositionXOffset = 15f; // 플레이어 생성 x좌표 위치
+        public float EnemyCreatePositionXOffset = -18f; // 적 생성 x좌표 위치
+        public StageFomation stageFomation;             // 적군 생성 진형
 
-        private StageData stageData;
+        private StageData stageData;    // 스테이지 데이터
 
         // Looting
-        public int gainEnergy = 0;
-        public int gainGacha = 0;
-        public int gainReinforce = 0;
-        public int gainIncant = 0;
+        public int gainEnergy = 0;      // 루팅한 에너지
+        public int gainGacha = 0;       // 루팅한 가챠 티켓
+        public int gainReinforce = 0;   // 루팅한 강화 티켓
+        public int gainIncant = 0;      // 루팅한 인챈트 티켓
         
-        private int currentStageGainEnergy = 0;
-        private int currentStageGainGacha = 0;
-        private int currentStageGainReinforce = 0;
-        private int currentStageGainIncant = 0;
+        private int currentStageGainEnergy = 0;     // 현재층 얻은 에너지
+        private int currentStageGainGacha = 0;      // 현재층 얻은 가챠 티켓
+        private int currentStageGainReinforce = 0;  // 현재층 얻은 강화 티켓
+        private int currentStageGainIncant = 0;     // 현재층 얻은 인챈트 티켓
 
-        private readonly Dictionary<BattleSceneState, UnityEvent> battleEventDic = new Dictionary<BattleSceneState, UnityEvent>();
-        private delegate void voidFunc();
-        private delegate IEnumerator IEnumeratorFunc();
+        private readonly Dictionary<BattleSceneState, UnityEvent> battleEventDic = new Dictionary<BattleSceneState, UnityEvent>();  // 전투 이벤트 버스
+        private delegate void voidFunc();   // 함수 호출 지연 사용 델리게이트
 
         [Header("Test")]
-        [SerializeField] bool isTest;
+        [SerializeField] bool isTest;   // 테스트 여부
 
         private void Awake()
         {
+            // 싱글톤 패턴
             if (instance == null)
             {
                 instance = this;
@@ -108,8 +112,7 @@ namespace RPG.Battle.Core
                 return;
             }
 
-
-
+            // 오브젝트 풀 UI 세팅
             ObjectPool.SetUp(BattleUI.battleCanvas);
         }
 
@@ -120,33 +123,45 @@ namespace RPG.Battle.Core
                 return;
             }
 
+            // 현재 층수를 세팅합니다.
             currentStageFloor = GameManager.Instance.choiceStageID;
             AudioManager.Instance.PlayMusic("BattleBackGroundMusic",true);
+            // 전투를 준비합니다.
             Ready();
         }
 
+        // 현재 전투 상태를 변경합니다.
         public void SetBattleState(BattleSceneState state)
         {
             this.currentBattleState = state;
+            // 전투 상태에 따른 이벤트를 호출합니다.
             Publish(currentBattleState);
         }
         #region 전투 상태
 
 
 
+        // 전투를 준비합니다.
         private void Ready()
         {
+            // 중단 버튼을 숨겨줍니다.
             BattleUI.InitResultBtn(false);
+            // 층 정보를 보여줍니다.
             BattleUI.ShowFloor(currentStageFloor);
+            // 현재 스테이지를 불러옵니다.
             LoadCurrentStage();
+            // 전투 상태를 변경합니다.
             SetBattleState(BattleSceneState.Ready);
+            // 모든 스킬 이펙트를 회수합니다.
             objectPool.ReleaseAllAbility();
+            // 전투 시작 시간동안 대기후 전투를 개시합니다.
             StartCoroutine(MethodCallTimer(() =>
             {
                 Battle();
             }, battleReadyTime));
         }
 
+        // 전투에서 승리했습니다.
         private void Win()
         {
             if (isTest)
@@ -155,25 +170,32 @@ namespace RPG.Battle.Core
             }
 
             if (GameManager.Instance.stageDataDic.ContainsKey(currentStageFloor + 1))
-                // 다음층이 있다면 준비
+                // 다음층이 존재한다면 
             {
+                // 전투 상태를 승리로 변경합니다
                 SetBattleState(BattleSceneState.Win);
+                // 현재 층수를 변경합니다.
                 currentStageFloor++;
+                // 플레이어 캐릭터가 중앙을 바라보고 이동하는 애니메이션으로 변경합니다.
                 livePlayer.transform.LookAt(livePlayer.transform.position + Vector3.left);
                 livePlayer.animator.ResetTrigger("Idle");
                 livePlayer.animator.SetTrigger("Move");
+                // 플레이어가 전투 준비 시간동안 플레이어 생성 위치로 이동한뒤 전투 준비 상태로 변경합니다.
                 livePlayer.transform.DOMoveX(EnemyCreatePositionXOffset, battleReadyTime).OnComplete(() => { Ready(); });
             }
             else
-                // 다음 층이 없다면 엔딩
+                // 다음 층이 없다면 엔딩을 보여줍니다.
             {
+                // 현재 상태를 엔딩으로 변경하고 엔딩음악을 재생합니다.
                 SetBattleState(BattleSceneState.Ending);
                 AudioManager.Instance.PlayMusic("EndingBackGroundMusic", true);
             }
 
+            // 유저 정보를 업데이트 합니다.
             UpdateUserinfo();
         }
 
+        // 전투에서 패배했습니다.
         private void Defeat()
         {
             if (isTest)
@@ -181,16 +203,20 @@ namespace RPG.Battle.Core
                 return;
             }
 
+            // 패배 음악을 재생합니다.
             AudioManager.Instance.PlayMusic("DefeatMusicBackGround", false);
             // 패배 연출
             SetBattleState(BattleSceneState.Defeat);
         }
 
+        // 전투를 시작합니다.
         private void Battle()
         {
+            // 전투 상태로 변경합니다.
             SetBattleState(BattleSceneState.Battle);
         }
 
+        // 전투를 중단합니다.
         private void Pause()
         {
             SetBattleState(BattleSceneState.Pause);
@@ -199,6 +225,7 @@ namespace RPG.Battle.Core
         #endregion
 
 
+        // 현재 층 ID로 스테이지 데이터를 불러옵니다
         private StageData LoadStageData()
         {
             if (GameManager.Instance.stageDataDic.TryGetValue(currentStageFloor, out StageData stage))
@@ -210,37 +237,54 @@ namespace RPG.Battle.Core
             return null;
         }
 
+        // 캐릭터가 죽었습니다.
         public void CharacterDead(Controller controller)
         {
             if (controller is PlayerController)
+                // 죽은 캐릭터가 플레이어 캐릭터면
             {
+                // 패배합니다.
                 Defeat();
             }
             else if (controller is EnemyController)
+                // 죽은 캐릭터가 적 캐릭터라면
             {
                 var enemy = controller as EnemyController;
+                // 생존 적에서 죽은 캐릭터를 제거합니다.
                 liveEnemies.Remove(enemy);
+                // 오브젝트 풀에 죽은 캐릭터를 넣어줍니다.
                 ObjectPool.ReturnEnemy((controller as EnemyController));
                 if (liveEnemies.Count <= 0)
+                    // 생존한 적이 한명도 없다면
                 {
+                    // 승리합니다.
                     Win();
                 }
             }
         }
 
+            // 적이 죽었을 때 아이템을 루팅합니다.
         public void LootingItem(EnemyController enemy)
         {
             EnemyData enemyData;
             if (GameManager.Instance.enemyDataDic.TryGetValue((enemy.battleStatus.status as EnemyStatus).enemyID, out enemyData))
+                // 죽은 적 캐릭터의 데이터 ID를 조회하여 루팅 테이블을 가져옵니다.
             {
+                // 에너지는 무조건 드랍합니다.
+                // 아이템을 드랍할 때 현재 죽은 적의 위치에서 드랍하도록 합니다.
                 ObjectPool.GetLootingItem(Camera.main.WorldToScreenPoint(enemy.transform.position), DropItemType.Energy, BattleUI.backpack.transform);
+                // 에너지를 획득합니다.
                 gainItem(DropItemType.Energy, enemyData.dropEnergy);
 
                 foreach (var dropTable in enemyData.dropitems)
+                    // 적데이터의 드랍테이블을 순회합니다.
                 {
                     float random = Random.Range(0f, 100f);
                     if (random <= dropTable.percent)
+                        // 확률 판정에 성공했다면
                     {
+                        // 아이템을 드랍합니다.
+                        // 아이템 타입에 맞는 이미지를 보여줍니다.
                         ObjectPool.GetLootingItem(Camera.main.WorldToScreenPoint(enemy.transform.position), dropTable.itemType, BattleUI.backpack.transform);
                         switch (dropTable.itemType)
                         {
@@ -259,8 +303,10 @@ namespace RPG.Battle.Core
             }
         }
 
+        // 아이템을 획득합니다.
         private void gainItem(DropItemType type, int count)
         {
+            // 얻은 아이템 타입에 따라 갯수만큼 획득합니다.
             switch (type)
             {
                 case DropItemType.Energy:
@@ -279,31 +325,31 @@ namespace RPG.Battle.Core
         }
         #region BattleSceneStateEvent
 
-
-
-
-
-
-
         #endregion
+        // 유저 정보를 업데이트 합니다.
         private void UpdateUserinfo()
         {
+            // 게임매니저의 유저 정보를 참조합니다.
             UserInfo userInfo = GameManager.Instance.UserInfo;
+            // 유저의 가장 높이 오른 층이 현재 층보다 낮다면 갱신시킵니다.
             if (userInfo.risingTopCount < currentStageFloor)
             {
                 userInfo.risingTopCount = currentStageFloor;
             }
 
+            // 현재 층에서 획득한 아이템들을 유저에 넣어줍니다.
             userInfo.energy += currentStageGainEnergy;
             userInfo.itemGachaTicket += currentStageGainGacha;
             userInfo.itemIncantTicket += currentStageGainIncant;
             userInfo.itemReinforceTicket += currentStageGainReinforce;
 
+            // 획득한 아이템들을 획득한 총아이템에 더해줍니다.
             gainEnergy += currentStageGainEnergy;
             gainGacha += currentStageGainGacha;
             gainIncant += currentStageGainIncant;
             gainReinforce += currentStageGainReinforce;
 
+            // 획득한 아이템들을 초기화시킵니다.
             currentStageGainEnergy = 0;
             currentStageGainGacha = 0;
             currentStageGainIncant = 0;
@@ -311,6 +357,7 @@ namespace RPG.Battle.Core
 
         }
 
+        // 현재 스테이지를 초기화합니다.
         private void ResetStage()
         {
             if (livePlayer != null)
@@ -318,6 +365,7 @@ namespace RPG.Battle.Core
                 livePlayer.gameObject.SetActive(false);
             }
 
+            // 모든 적을 풀에 넣어줍니다.
             foreach (var enemy in liveEnemies)
             {
                 ObjectPool.ReturnEnemy(enemy);
@@ -418,7 +466,7 @@ namespace RPG.Battle.Core
             }
         }
 
-        // 이벤트 활성화
+        // 전투 상태 이벤트들을 호출합니다.
         public void Publish(BattleSceneState state)
         {
             UnityEvent thisEvent;

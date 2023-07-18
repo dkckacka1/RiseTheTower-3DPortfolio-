@@ -4,16 +4,21 @@ using UnityEngine;
 using RPG.Character.Equipment;
 using RPG.Character.Status;
 
+/*
+ * 무기 인챈트의 인챈트 클래스
+ */
+
 public class WeaponIncant : Incant
 {
-    public int attackDamage;
-    public float attackSpeed;
-    public float attackRange;
-    public float movementSpeed;
-    public float criticalChance;
-    public float criticalDamage;
-    public float attackChance;
+    public int attackDamage;        // 공격력
+    public float attackSpeed;       // 공격 속도
+    public float attackRange;       // 공격 범위
+    public float movementSpeed;     // 이동 속도
+    public float criticalChance;    // 치명타 확률
+    public float criticalDamage;    // 치명타 피해율
+    public float attackChance;      // 명중률
 
+        // 무기 데이터에 맞는 무기 인챈트 생성자
     public WeaponIncant(WeaponIncantData data) : base(data)
     {
         attackDamage = data.attackDamage;
@@ -25,11 +30,13 @@ public class WeaponIncant : Incant
         attackChance = data.movementSpeed;
     }
 
+    // 공격 시 나올 스킬 효과
     public virtual void AttackEvent(BattleStatus player, BattleStatus enemy)
     {
         Debug.Log("AttackEvent is Nothing");
     }
 
+        // 무기 인챈트의 증가 스텟 설명
     public override string GetAddDesc()
     {
         string returnStr = "";
@@ -120,6 +127,7 @@ public class WeaponIncant : Incant
         return returnStr;
     }
 
+        // 무기 인챈트의 감소 스텟 설명
     public override string GetMinusDesc()
     {
         string returnStr = "";

@@ -10,7 +10,7 @@ namespace RPG.Core
 {
     public class ConfigureData
     {
-        public float musicVolume = 100f;
-        public float soundVolume = 100f;
+        public float musicVolume = 100f;    // À½¾Ç º¼·ý
+        public float soundVolume = 100f;    // È¿°úÀ½ º¼·ý
     }
 }
