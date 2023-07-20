@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 갑옷 장비 클래스
+ */
+
 namespace RPG.Character.Equipment
 {
     public class Armor : Equipment
     {
-        private int hpPoint;
-        private int defencePoint;
-        private float movementSpeed;
-        private float evasionPoint;
+        private int hpPoint;            // 체력 수치
+        private int defencePoint;       // 방어 수치
+        private float movementSpeed;    // 이독속도
+        private float evasionPoint;     // 회피율
 
-        // Encapsulation
+        // 장비의 인챈트가 부여됬다면 인챈트 속성치를 더해서 반환합니다.
         public int HpPoint 
         { 
             get
