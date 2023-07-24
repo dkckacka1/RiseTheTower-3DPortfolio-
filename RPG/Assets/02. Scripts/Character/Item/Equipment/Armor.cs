@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
+ * TODO : 주석 작성
  * 갑옷 장비 클래스
  */
 

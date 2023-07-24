@@ -5,6 +5,8 @@ using UnityEngine;
 using RPG.Battle.Behaviour;
 using RPG.Battle.Control;
 
+// TODO : 컨트롤러 주석
+
 namespace RPG.Battle.AI
 {
     public class AttackState : State, IState

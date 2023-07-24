@@ -8,6 +8,8 @@ using RPG.Battle.UI;
 using RPG.Battle.Event;
 using RPG.Battle.Control;
 
+// TODO : 주석 작성
+
 namespace RPG.Character.Status
 {
     public class BattleStatus : MonoBehaviour

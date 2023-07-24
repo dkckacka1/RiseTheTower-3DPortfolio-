@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using RPG.Battle.Core;
 
+// TODO : 모든 UI 주석
+
 namespace RPG.Battle.UI
 {
     public class AbilityButton : MonoBehaviour
