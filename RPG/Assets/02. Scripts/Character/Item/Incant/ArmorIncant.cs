@@ -28,13 +28,11 @@ namespace RPG.Character.Equipment
         // 초당 발휘될 효과
         public virtual void PerSecEvent(BattleStatus status)
         {
-            Debug.Log("PerSecEvent is Nothing");
         }
 
         // 데미지 받을 시 효과
         public virtual void TakeDamageEvent(BattleStatus character, BattleStatus target)
         {
-            Debug.Log("TakeDamageEvent is Nothing");
         }
 
         // 갑옷 인챈트의 증가 스텟 설명

@@ -29,13 +29,11 @@ namespace RPG.Character.Equipment
         // 이동시 발휘할 효과
         public virtual void MoveEvent(BattleStatus player)
         {
-            Debug.Log("MoveEvent is Nothing");
         }
 
         // 바지 액티브 스킬
         public virtual void ActiveSkill(BattleStatus player)
         {
-            Debug.Log("Pants ActiveSkill is Nothing");
         }
 
         // 바지 인챈트의 증가 스텟 설명

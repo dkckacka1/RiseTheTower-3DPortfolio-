@@ -30,13 +30,11 @@ namespace RPG.Character.Equipment
         // Ä¡¸íÅ¸ °ø°Ý½Ã È¿°ú
         public virtual void criticalAttackEvent(BattleStatus player, BattleStatus enemy)
         {
-            Debug.Log("criticalAttackEvent is Nothing");
         }
 
         // Çï¸ä ¾×Æ¼ºê ½ºÅ³
         public virtual void ActiveSkill(BattleStatus player)
         {
-            Debug.Log("Helmet ActiveSkill is Nothing");
         }
 
         // Çï¸ä ÀÎÃ¦Æ®ÀÇ Áõ°¡ ½ºÅÝ ¼³¸í

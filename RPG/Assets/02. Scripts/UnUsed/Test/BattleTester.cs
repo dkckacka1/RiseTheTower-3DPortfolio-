@@ -123,7 +123,7 @@ namespace RPG.Test
 
                 if (GUI.Button(new Rect(10, 410, 100, 100), "CreateStage"))
                 {
-                    var stageFomation = AssetDatabase.LoadAssetAtPath<StageFomation>("Assets/98. CreateAssets/FomationAsset.asset");
+                    StageFomation stageFomation = AssetDatabase.LoadAssetAtPath<StageFomation>("Assets/98. CreateAssets/FomationAsset.asset");
                     if (stageFomation == null)
                     {
                         Debug.Log("없음");
@@ -146,7 +146,7 @@ namespace RPG.Test
                     }
 
                     Fomation newFomation = new Fomation();
-                    newFomation.fomationName = inputField.text;
+                    newFomation.fomationName = enemiesPos.Count + "인 포메이션";
                     newFomation.fomationEnemyCount = enemiesPos.Count;
                     foreach (var pos in enemiesPos)
                     {

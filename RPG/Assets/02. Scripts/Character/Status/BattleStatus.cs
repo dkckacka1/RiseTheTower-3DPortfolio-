@@ -8,7 +8,9 @@ using RPG.Battle.UI;
 using RPG.Battle.Event;
 using RPG.Battle.Control;
 
-// TODO : 주석 작성
+/*
+ * 전투 스텟
+ */
 
 namespace RPG.Character.Status
 {
@@ -16,32 +18,29 @@ namespace RPG.Character.Status
     {
         // Component
         [Header("UI")]
-        public CharacterUI characterUI;
+        public CharacterUI characterUI;     // 전투 캐릭터 UI
 
         [Header("Battle")]
-        public int currentHp = 0;
-        public bool isDead = false;
+        public int currentHp = 0;       // 현재 체력
+        public bool isDead = false;     // 죽음 여부
 
         [Header("Status")]
-        public Status status;
+        public Status status;       // 캐릭터 스텟
 
         // Coroutine
-        public IEnumerator perSecCoroutine;
+        public IEnumerator perSecCoroutine; // 매초당 이벤트를 호출할 코루틴
 
-        // 캐릭터의 현재 상태
-        public CombatState currentState;
-        public DebuffType currentDebuff;
+        public CombatState currentState;    // 현재 상태
+        public DebuffType currentDebuff;    // 현재 디버프 상황
         public bool isActunableDebuff; // 현재 행동 불가 디버프 상태인가?
-        private bool isCursed;
+        private bool isCursed;  // 현재 저주받음 상태인지 여부
         public List<IEnumerator> debuffList = new List<IEnumerator>(); // 현재 디버프 리스트
 
-
-
         // Event
-        public PerSecondEvent perSecEvent;
-        public TakeDamageEvent takeDamageEvent;
+        public PerSecondEvent perSecEvent;      // 매초당 나올 이벤트
+        public TakeDamageEvent takeDamageEvent; // 피해받았을때 나올 이벤트
 
-        // Encapsule
+        // 현재 체력
         public int CurrentHp
         {
             get => currentHp;
@@ -62,7 +61,7 @@ namespace RPG.Character.Status
 
         private void Awake()
         {
-            perSecEvent = new PerSecondEvent();
+            perSecEvent = new PerSecondEvent();     
             takeDamageEvent = new TakeDamageEvent();
             perSecCoroutine = PerSecEvent();
         }
@@ -80,13 +79,14 @@ namespace RPG.Character.Status
 
         }
         #region Initialize
-
+        // 활성화 되었을때 초기화합니다.
         public virtual void Init()
         {
             currentHp = status.MaxHp;
             isDead = false;
         }
 
+        // 게임 오브젝트가 활성화 될때 행동
         public virtual void Release()
         {
         }
@@ -94,16 +94,19 @@ namespace RPG.Character.Status
 
         #region BattleEvent
 
+        // 피해입을때 이벤트를 추가합니다.
         public void AddTakeDamageAction(UnityAction<BattleStatus, BattleStatus> action)
         {
             takeDamageEvent.AddListener(action);
         }
 
+        // 초당 이벤트를 추가합니다.
         public void AddPerSecAction(UnityAction<BattleStatus> action)
         {
             perSecEvent.AddListener(action);
         }
 
+        // 매초당 이벤트를 호출할 코루틴
         public IEnumerator PerSecEvent()
         {
             while (!isDead)
@@ -115,6 +118,7 @@ namespace RPG.Character.Status
 
         #endregion
 
+        // 피해 입습니다.
         public void TakeDamage(int damage, DamagedType type = DamagedType.Normal)
         {
             if (isDead) return;
@@ -126,6 +130,7 @@ namespace RPG.Character.Status
                 totalDamage += (int)(damage * 0.5f);
             }
 
+            // 받은 피해 타입에 따라 나올 전투 텍스트를 변경합니다.
             switch (type)
             {
                 case DamagedType.Normal:
@@ -142,6 +147,7 @@ namespace RPG.Character.Status
             }
         }
 
+        // 캐릭터가 죽습니다.
         public void Dead()
         {
             StopAllDebuff();
@@ -150,19 +156,23 @@ namespace RPG.Character.Status
             isDead = true;
         }
 
+        // 체력을 회복합니다.
         public void Heal(int healPoint)
         {
             CurrentHp += healPoint;
         }
 
         #region Debuff
+        // 디버프를 받습니다.
         public void TakeDebuff(DebuffType type, float duration)
         {
+            // 얻은 디버프 종류에 맞춰서 활성화 합니다.
             switch (type)
             {
                 case DebuffType.Stern:
                     if (isActunableDebuff) return;
                     {
+                        // 스턴 디버프를 활성화합니다.
                         IEnumerator debuff = TakeStern(duration);
                         StartCoroutine(debuff);
                         debuffList.Add(debuff);
@@ -172,6 +182,7 @@ namespace RPG.Character.Status
                 case DebuffType.Fear:
                     if (isActunableDebuff) return;
                     {
+                        // 공포 디버프를 활성화합니다.
                         IEnumerator debuff = TakeFear(duration);
                         StartCoroutine(debuff);
                         debuffList.Add(debuff);
@@ -181,6 +192,7 @@ namespace RPG.Character.Status
                 case DebuffType.Temptation:
                     if (isActunableDebuff) return;
                     {
+                        // 유혹 디버프를 활성화합니다.
                         IEnumerator debuff = TakeTemptation(duration);
                         StartCoroutine(debuff);
                         debuffList.Add(debuff);
@@ -189,6 +201,7 @@ namespace RPG.Character.Status
                     break;
                 case DebuffType.Paralysis:
                     {
+                        // 마비 디버프를 활성화합니다.
                         IEnumerator debuff = TakeParalysis(duration);
                         StartCoroutine(debuff);
                         debuffList.Add(debuff);
@@ -197,6 +210,7 @@ namespace RPG.Character.Status
                     break;
                 case DebuffType.Bloody:
                     {
+                        // 출혈 디버프를 활성화합니다.
                         IEnumerator debuff = TakeBloody(duration);
                         StartCoroutine(debuff);
                         debuffList.Add(debuff);
@@ -205,6 +219,7 @@ namespace RPG.Character.Status
                     break;
                 case DebuffType.Curse:
                     {
+                        // 저주 디버프를 활성화합니다.
                         IEnumerator debuff = TakeCurse(duration);
                         StartCoroutine(debuff);
                         debuffList.Add(debuff);
@@ -214,6 +229,7 @@ namespace RPG.Character.Status
             }
         }
 
+        // 모든 디버프를 활성화합니다.
         public void ReStartAllDebuff()
         {
             foreach (var debuff in debuffList)
@@ -222,6 +238,7 @@ namespace RPG.Character.Status
             }
         }
 
+        // 모든 디버프를 중단시킵니다.
         public void StopAllDebuff()
         {
             foreach (var debuff in debuffList)
@@ -230,6 +247,7 @@ namespace RPG.Character.Status
             }
         }
 
+        // 모든 디버프를 제거합니다.
         public void RemoveAllDebuff()
         {
             debuffList.Clear();

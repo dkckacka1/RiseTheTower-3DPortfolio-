@@ -6,9 +6,9 @@ namespace RPG.Character.Equipment
 {
     public class Pants : Equipment
     {
-        private int defencePoint;
-        private int hpPoint;
-        private float movementSpeed;
+        private int defencePoint;       // 방어 수치
+        private int hpPoint;            // 체력 수치
+        private float movementSpeed;    // 이동 속도
 
         // Encapsulation
         public int DefencePoint 
@@ -93,6 +93,7 @@ namespace RPG.Character.Equipment
             MovementSpeed = data.movementSpeed;
         }
 
+        // 바지의 데이터를 변경합니다.
         public override void ChangeData(EquipmentData data)
         {
             if (!(data is PantsData))

@@ -8,17 +8,17 @@ namespace RPG.Character.Equipment
 {
     public class Weapon : Equipment
     {
-        public int weaponApparenceID;
+        public int weaponApparenceID;   // 무기 외형 ID
 
-        public int attackDamage;
-        public float attackSpeed;
-        public float attackRange;
-        public float movementSpeed;
-        public float criticalChance;
-        public float criticalDamage;
-        public float attackChance;
+        public int attackDamage;        // 무기 공격력
+        public float attackSpeed;       // 공격 속도
+        public float attackRange;       // 공격 범위
+        public float movementSpeed;     // 이동 속도
+        public float criticalChance;    // 치명타 확률
+        public float criticalDamage;    // 치명타 피해량
+        public float attackChance;      // 명중률
 
-        public weaponHandleType handleType;
+        public weaponHandleType handleType; // 무기 외형 타입
 
         // Encapsulation
         public int AttackDamage
@@ -210,6 +210,7 @@ namespace RPG.Character.Equipment
             handleType = data.weaponHandleType;
         }
 
+        // 무기의 데이터를 변경합니다.
         public override void ChangeData(EquipmentData data)
         {
             if (!(data is WeaponData))

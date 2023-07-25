@@ -13,6 +13,7 @@ using RPG.Main.Audio;
 
 /*
  * 전투를 관리하는 매니저 클래스
+ * ORDER : 싱글턴 패턴 예시
  */
 
 namespace RPG.Battle.Core
@@ -26,7 +27,7 @@ namespace RPG.Battle.Core
             {
                 if (instance == null)
                 {
-                    Debug.Log("BattleManager is NULL");
+                    Debug.LogWarning("BattleManager is NULL");
                     return null;
                 }
 
@@ -483,6 +484,7 @@ namespace RPG.Battle.Core
 
         #endregion
 
+        // ORDER : 현재 자신의 위치에서 가장 가까운 컨트롤러를 반환하는 함수
         /// <summary>
         /// 가장 가까운 T를 찾아서 리턴합니다.
         /// </summary>

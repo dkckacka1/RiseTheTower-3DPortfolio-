@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// ORDER : 스테이지 선택 씬에서 무한 스크롤링 UI 구현
+// 참조 URL : https://wonjuri.tistory.com/entry/Unity-UI-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%B7%B0-%EC%A0%9C%EC%9E%91
+
 namespace RPG.Stage.UI
 {
 

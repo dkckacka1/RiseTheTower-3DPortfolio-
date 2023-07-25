@@ -38,6 +38,7 @@ namespace RPG.Battle.UI
             }
         }
 
+        // ORDER : 스킬 쿨타임을 보여주는 UI 메서드
         public IEnumerator CheckCoolTime()
         {
             SetCool();

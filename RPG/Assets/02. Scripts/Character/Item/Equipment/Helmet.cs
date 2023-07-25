@@ -6,12 +6,12 @@ namespace RPG.Character.Equipment
 {
     public class Helmet : Equipment
     {
-        private int defencePoint;
-        private int hpPoint;
-        private float decreseCriticalDamage;
-        private float evasionCritical;
+        private int defencePoint;               // 방어력 수치
+        private int hpPoint;                    // 체력 수치
+        private float decreseCriticalDamage;    // 치명타 데미지 감소율
+        private float evasionCritical;          // 회피율
 
-        // Encapsulation
+        // 장비의 인챈트가 부여됬다면 인챈트 속성치를 더해서 반환합니다.
         public int DefencePoint 
         { 
             get
@@ -119,6 +119,7 @@ namespace RPG.Character.Equipment
             EvasionCritical = data.evasionCritical;
         }
 
+        // 헬멧의 데이터를 변경합니다.
         public override void ChangeData(EquipmentData data)
         {
             if (!(data is HelmetData))

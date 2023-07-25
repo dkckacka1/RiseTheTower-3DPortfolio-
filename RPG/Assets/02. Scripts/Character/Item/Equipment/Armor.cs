@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * TODO : 주석 작성
  * 갑옷 장비 클래스
  */
 
@@ -124,6 +123,7 @@ namespace RPG.Character.Equipment
             EvasionPoint = data.evasionPoint;
         }
 
+        // 갑옷의 데이터를 변경합니다.
         public override void ChangeData(EquipmentData data)
         {
             if (!(data is ArmorData))

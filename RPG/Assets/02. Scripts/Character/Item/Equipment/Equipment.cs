@@ -3,21 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
 
+/*
+ * 장비아이템 클래스
+ */
+
 namespace RPG.Character.Equipment
 {
     public abstract class Equipment
     {
-        public int reinforceCount = 0;
-        public string itemName;
-        public EquipmentItemType equipmentType;
-        public TierType equipmentTier;
-        public string description;
+        public int reinforceCount = 0;              // 장비의 강화 수치
+        public string itemName;                     // 장비아이템 이름
+        public EquipmentItemType equipmentType;     // 장비아이템 타입
+        public TierType equipmentTier;              // 장비아이템 등급
+        public string description;                  // 장비아이템 설명
 
-        public EquipmentData data;
+        public EquipmentData data;                  // 장비아이템 데이터
 
-        public Incant prefix;
-        public Incant suffix;
+        public Incant prefix;       // 접두 인챈트
+        public Incant suffix;       // 접미 인챈트
 
+        // 장비아이템으로 만든 생성자 로비에서 전투로 넘어갈때 캐릭터 정보를 통해 전투캐릭터로 만들때 사용
         public Equipment(Equipment equipment)
         {
             data = equipment.data;
@@ -31,6 +36,7 @@ namespace RPG.Character.Equipment
             suffix = equipment.suffix;
         }
 
+        // 장비아이템 데이터로 만든 생성자 유저데이터에서 로비캐릭터를 만들때 사용
         public Equipment(EquipmentData data)
         {
             this.data = data;
@@ -40,6 +46,7 @@ namespace RPG.Character.Equipment
             description = data.description;
         }
 
+        // 장비아이템 데이터를 교체합니다.
         public virtual void ChangeData(EquipmentData data)
         {
             RemoveAllIncant();
@@ -53,7 +60,7 @@ namespace RPG.Character.Equipment
         }
 
         #region Incant
-
+        // 인챈트 ID로 인챈트를 찾아 장비아이템에 부여합니다.
         public void Incant(int incantID)
         {
             Incant incant = GameManager.Instance.incantDic[incantID];
@@ -82,6 +89,7 @@ namespace RPG.Character.Equipment
             }
         }
 
+        // 인챈트 클래스로 장비아이템에 인챈트합니다.
         public void Incant(Incant incant)
         {
             if (incant == null)
@@ -108,6 +116,7 @@ namespace RPG.Character.Equipment
             }
         }
 
+        // 모든 인챈트를 제거합니다.
         public void RemoveAllIncant()
         {
             if (prefix != null)
@@ -121,12 +130,14 @@ namespace RPG.Character.Equipment
             }
         }
 
+        // 인챈트가 있는지 여부
         public bool isIncant()
         {
             return (prefix != null || suffix != null);
         }
         #endregion
 
+        // 접두 인챈트ID를 찾습니다.
         public int GetPrefixIncantID()
         {
             if (prefix == null)
@@ -137,6 +148,7 @@ namespace RPG.Character.Equipment
             return prefix.incantID;
         }
 
+        // 접미 인챈트ID를 찾습니다.
         public int GetSuffixIncantID()
         {
             if (suffix == null)
@@ -147,11 +159,13 @@ namespace RPG.Character.Equipment
             return suffix.incantID;
         }
 
+        // 인챈트에 특수한 효과가 붙는지 여부
         public bool hasAbilitySkill()
         {
             return (hasPrefixAbilitySkill() || hasSuffixAbilitySkill());
         }
 
+        // 접두 인챈트에 효과가 붙는지 여부
         public bool hasPrefixAbilitySkill()
         {
             if (prefix == null) return false;
@@ -160,6 +174,7 @@ namespace RPG.Character.Equipment
             return true;
         }
 
+        // 접미 인챈트에 효과가 붙는지 여부
         public bool hasSuffixAbilitySkill()
         {
             if (suffix == null) return false;
@@ -168,16 +183,19 @@ namespace RPG.Character.Equipment
             return true;
         }
 
+        // 강화가 되어있는지 여부
         public bool isReinforce()
         {
             return !(reinforceCount == 0);
         }
 
+        // 장비를 강화합니다.
         public void ReinforceItem()
         {
             reinforceCount++;
         }
 
+        // 강화 수치를 제거합니다.
         public void RemoveReinforce()
         {
             reinforceCount = 0;
@@ -193,6 +211,7 @@ namespace RPG.Character.Equipment
                 $"접미인챈트 : {(suffix != null ? suffix.incantName : "없음")}";
         }
 
+        // 장비 등급 문자열을 리턴합니다.
         public string ToStringTier()
         {
             switch (equipmentTier)
@@ -210,6 +229,7 @@ namespace RPG.Character.Equipment
             return "";
         }
 
+        // 장비 타입 문자열을 리턴합니다.
         public string ToStringEquipmentType()
         {
             switch (equipmentType)

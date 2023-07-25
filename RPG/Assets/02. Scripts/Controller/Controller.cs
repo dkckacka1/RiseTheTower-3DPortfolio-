@@ -180,6 +180,7 @@ namespace RPG.Battle.Control
         #endregion
 
         #region CheckState
+        // ORDER : 현재 상태에 따라 컨트롤러의 동작을 변경하는 상태패턴 구현
         private IState CheckState()
         {
             if (battleStatus.isDead)
@@ -249,6 +250,7 @@ namespace RPG.Battle.Control
 
         public void AttackEvent()
         {
+            if (target == null) return;
             if (target.battleStatus.isDead) return;
 
             AudioManager.Instance.PlaySoundOneShot("AttackSound");

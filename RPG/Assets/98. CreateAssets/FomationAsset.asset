@@ -43,3 +43,45 @@ MonoBehaviour:
     - {x: -2, y: 0, z: 3}
     - {x: -2, y: 0, z: 0}
     - {x: -2, y: 0, z: -3}
+  - fomationName: "6\uC778 \uD3EC\uBA54\uC774\uC158"
+    fomationEnemyCount: 6
+    positions:
+    - {x: 3, y: 0, z: -3}
+    - {x: 3, y: 0, z: 0}
+    - {x: 3, y: 0, z: 3}
+    - {x: -3, y: 0, z: -3}
+    - {x: -3, y: 0, z: 0}
+    - {x: -3, y: 0, z: 3}
+  - fomationName: "7\uC778 \uD3EC\uBA54\uC774\uC158"
+    fomationEnemyCount: 7
+    positions:
+    - {x: 3, y: 0, z: 3}
+    - {x: 3, y: 0, z: 0}
+    - {x: 3, y: 0, z: -3}
+    - {x: 0, y: 0, z: 0}
+    - {x: -3, y: 0, z: 3}
+    - {x: -3, y: 0, z: 0}
+    - {x: -3, y: 0, z: -3}
+  - fomationName: "8\uC778 \uD3EC\uBA54\uC774\uC158"
+    fomationEnemyCount: 8
+    positions:
+    - {x: 3, y: 0, z: 3}
+    - {x: 3, y: 0, z: 0}
+    - {x: 3, y: 0, z: -3}
+    - {x: 0, y: 0, z: 2}
+    - {x: 0, y: 0, z: -2}
+    - {x: -3, y: 0, z: 3}
+    - {x: -3, y: 0, z: 0}
+    - {x: -3, y: 0, z: -3}
+  - fomationName: "9\uC778 \uD3EC\uBA54\uC774\uC158"
+    fomationEnemyCount: 9
+    positions:
+    - {x: 3, y: 0, z: 3}
+    - {x: 3, y: 0, z: 0}
+    - {x: 3, y: 0, z: -3}
+    - {x: 0, y: 0, z: 3}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: -3}
+    - {x: -3, y: 0, z: 3}
+    - {x: -3, y: 0, z: 0}
+    - {x: -3, y: 0, z: -3}

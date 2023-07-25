@@ -15,6 +15,8 @@ using UnityEngine.Events;
  * 전투 시 사용될 오브젝트 풀 시스템 클래스
  */
 
+// ORDER : 오브젝트 풀 사용 예
+
 namespace RPG.Battle.Core
 {
     public class ObjectPooling : MonoBehaviour

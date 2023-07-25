@@ -155,6 +155,7 @@ namespace RPG.Core
         }
         #endregion
 
+        // ORDER : 제네릭 형식 제약조건으로 장비아이템 데이터를 가져오는 함수
         // 장비 아이템 데이터를 가져옵니다.
         public bool GetEquipmentData<T>(int id,out T sourceData) where T : EquipmentData
         {
