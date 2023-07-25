@@ -8,6 +8,10 @@ using RPG.Core;
 using UnityEngine.Events;
 using RPG.Main.Audio;
 
+/*
+ * 장비 창 UI 클래스
+ */
+
 namespace RPG.Main.UI.BlackSmith
 {
     public class ItemPopupUI : MonoBehaviour
@@ -15,35 +19,33 @@ namespace RPG.Main.UI.BlackSmith
         public Equipment choiceItem;
 
         [Header("itemPopupProperty")]
-        [SerializeField] Button incantExcuteBtn;
-        [SerializeField] Button reinforceExcuteBtn;
-        [SerializeField] Button gachaExcuteBtn;
-        [SerializeField] TextMeshProUGUI TodoText;
+        [SerializeField] Button incantExcuteBtn;            // 인챈트 실행 버튼
+        [SerializeField] Button reinforceExcuteBtn;         // 강화 실행 버튼
+        [SerializeField] Button gachaExcuteBtn;             // 가챠 실행 버튼
+        [SerializeField] TextMeshProUGUI TodoText;          // 버튼 설명 텍스트
 
         [Header("EquipmentData")]
-        [SerializeField] Image equipmentImage;
-        [SerializeField] TextMeshProUGUI equipmentDescText;
-        [SerializeField] TextMeshProUGUI weaponEquipmentStatusText;
-        [SerializeField] TextMeshProUGUI armorEquipmentStatusText;
-        [SerializeField] TextMeshProUGUI helmetEquipmentStatusText;
-        [SerializeField] TextMeshProUGUI pantsEquipmentStatusText;
-        [SerializeField] VerticalLayoutGroup layout;
+        [SerializeField] Image equipmentImage;                      // 장비 이미지
+        [SerializeField] TextMeshProUGUI equipmentDescText;         // 장비 설명 텍스트
+        [SerializeField] TextMeshProUGUI weaponEquipmentStatusText; // 무기 설명 텍스트
+        [SerializeField] TextMeshProUGUI armorEquipmentStatusText;  // 갑옷 설명 텍스트
+        [SerializeField] TextMeshProUGUI helmetEquipmentStatusText; // 헬멧 설명 텍스트
+        [SerializeField] TextMeshProUGUI pantsEquipmentStatusText;  // 바지 설명 텍스트
+        [SerializeField] VerticalLayoutGroup layout;                // 레이아웃 그룹
 
         [Header("PrefixIncant")]
-        [SerializeField] IncantDescUI prefixDescUI;
-        [SerializeField] IncantAbilityUI prefixAbilityUI;
+        [SerializeField] IncantDescUI prefixDescUI;         // 접두 인챈트 설명 UI
+        [SerializeField] IncantAbilityUI prefixAbilityUI;   // 접두 인챈트 효과 설명 UI
 
         [Header("SuffixIncant")]
-        [SerializeField] IncantDescUI suffixDescUI;
-        [SerializeField] IncantAbilityUI suffixAbilityUI;
-
-
+        [SerializeField] IncantDescUI suffixDescUI;         // 접미 인챈트 설명 UI
+        [SerializeField] IncantAbilityUI suffixAbilityUI;   // 접미 인챈트 효과 설명 UI
 
         [Header("Effecter")]
-        [SerializeField] UIEffecter reinforceEffecter;
+        [SerializeField] UIEffecter reinforceEffecter;  // 강화 이펙트 
 
-        CharacterAppearance appearance;
-        Animation animation;
+        CharacterAppearance appearance; // 현재 로비 캐릭터 외형
+        Animation animation;            // 현재 창의 애니메이션
 
         private void Awake()
         {
@@ -51,6 +53,7 @@ namespace RPG.Main.UI.BlackSmith
             appearance = FindObjectOfType<CharacterAppearance>();
         }
 
+        // 창이 활성화되었다면 애니메이션을 초기화합니다.
         private void OnEnable()
         {
             animation.Rewind();
@@ -59,6 +62,7 @@ namespace RPG.Main.UI.BlackSmith
             animation.Stop();
         }
 
+        // 가챠 버튼 눌렀을 때 세팅합니다.
         public void InitGacha()
         {
             TodoText.fontSize = 18.5f;
@@ -76,6 +80,7 @@ namespace RPG.Main.UI.BlackSmith
 
         }
 
+        // 인챈트 버튼 눌렀을 때 세팅합니다.
         public void InitIncant()
         {
             TodoText.fontSize = 22;
@@ -91,6 +96,7 @@ namespace RPG.Main.UI.BlackSmith
 
         }
 
+        // 강화 버튼 눌렀을 때 세팅합니다.
         public void InitReinforce()
         {
             TodoText.text = $"아이템을 강화하시겠습니까?\n" +
@@ -103,6 +109,7 @@ namespace RPG.Main.UI.BlackSmith
             gachaExcuteBtn.gameObject.SetActive(false);
         }
 
+        // 실행 버튼을 세팅합니다.
         public void InitExcuteBtn()
         {
             if (GameManager.Instance.UserInfo.itemIncantTicket <= 0)
@@ -132,15 +139,20 @@ namespace RPG.Main.UI.BlackSmith
                 gachaExcuteBtn.interactable = true;
             }
         }
+        
+        // 장비를 인챈트 합니다.
         public void Incant()
         {
             GameManager.Instance.UserInfo.itemIncantTicket--;
 
             Incant incant;
+            // 현재 선택한 장비아이템 타입의 랜덤한 등금의 인챈트를 가져옵니다.
             RandomSystem.TryGachaIncant(choiceItem.equipmentType, GameManager.Instance.incantDic, out incant);
 
+            // 아이템을 인챈트 합니다.
             choiceItem.Incant(incant);
 
+            // 장비아이템 설명을 표시하고 해당 장비아이템을 현재 캐릭터에 장착시킵니다.
             ShowItem(choiceItem);
             GameManager.Instance.Player.SetEquipment();
             InitIncant();
@@ -148,29 +160,34 @@ namespace RPG.Main.UI.BlackSmith
             AudioManager.Instance.PlaySoundOneShot("IncantSound");
         }
 
+        // 장비를 뽑습니다.
         public void Gacha()
         {
             GameManager.Instance.UserInfo.itemGachaTicket--;
 
             EquipmentData data;
+            // 랜덤한 등급의 현재 아이템과 같은 아이템을 뽑습니다.
             RandomSystem.TryGachaRandomData(GameManager.Instance.equipmentDataDic, choiceItem.equipmentType, out data);
             if (data == null)
             {
                 return;
             }
 
+            // 가챠 애니메이션을 보여줍니다.
             if (animation.isPlaying)
             {
                 ShowItem(choiceItem);
                 animation.Stop();
             }
 
+            // 선택한 아이템의 데이터를 변경해줍니다.
             choiceItem.ChangeData(data);
             if (choiceItem.equipmentType == EquipmentItemType.Weapon)
             {
                 appearance.EquipWeapon((data as WeaponData).weaponApparenceID, (data as WeaponData).weaponHandleType);
             }
 
+            //뽑은 아이템을 장착 시켜줍니다.
             GameManager.Instance.Player.SetEquipment();
             InitGacha();
             GameManager.Instance.UserInfo.UpdateUserinfoFromStatus(GameManager.Instance.Player);
@@ -179,16 +196,20 @@ namespace RPG.Main.UI.BlackSmith
             AudioManager.Instance.PlaySoundOneShot("GachaSound");
             animation.Play();
         }
+        // 선택한 아이템을 강화합니다.
         public void Reinforce()
         {
             GameManager.Instance.UserInfo.itemReinforceTicket--;
 
             if (MyUtility.ProbailityCalc(100 - RandomSystem.ReinforceCalc(choiceItem), 0, 100))
+                // 강화에 성공했다면
             {
+                // 장비를 강화하고 강화 이펙트를 보여줍니다.
                 choiceItem.ReinforceItem();
                 reinforceEffecter.Play();
             }
 
+            // 로비 캐릭터가 장비를 장착합니다.
             GameManager.Instance.Player.SetEquipment();
             ShowItem(choiceItem);
             InitReinforce();
@@ -196,20 +217,24 @@ namespace RPG.Main.UI.BlackSmith
             AudioManager.Instance.PlaySoundOneShot("ReinforceSound");
         }
 
+        // 아이템을 보여줍니다.
         public void ShowItemAnim()
         {
             ShowItem(choiceItem);
         }
 
 
+        // 장비아이템을 선택합니다.
         public void ChoiceItem(Equipment item)
         {
             choiceItem = item;
             ShowItem(item);
         }
 
+        // 아이템 설명을 보여줍니다.
         private void ShowItem(Equipment item)
         {
+            // 아이템의 이미지와 설명을 표시합니다.
             equipmentImage.sprite = item.data.equipmentSprite;
             equipmentDescText.text = $"" +
                 $"{MyUtility.returnSideText("장비 이름 : ", $"{((item.reinforceCount > 0) ? $"+{item.reinforceCount} " : "")}{item.itemName}")}\n" +
@@ -217,6 +242,8 @@ namespace RPG.Main.UI.BlackSmith
                 $"{MyUtility.returnSideText("장비 등급 : ", item.ToStringTier())}\n" +
                 $"{MyUtility.returnSideText("접두 인챈트 : ", (item.prefix != null ? item.prefix.incantName : "없음"))}\n" +
                 $"{MyUtility.returnSideText("접미 인챈트 : ", (item.suffix != null ? item.suffix.incantName : "없음"))}";
+
+            // 모든 장비 타입 설명을 숨겨주고 알맞는 장비타입 설명만 보여줍니다.
 
             weaponEquipmentStatusText.transform.parent.gameObject.SetActive(false);
             armorEquipmentStatusText.transform.parent.gameObject.SetActive(false);
@@ -239,13 +266,18 @@ namespace RPG.Main.UI.BlackSmith
                     break;
             }
 
+            // 장비에 적용되어있는 인챈트를 보여줍니다.
             prefixDescUI.ShowIncant(choiceItem.prefix);
             prefixAbilityUI.ShowIncant(choiceItem.prefix);
             suffixDescUI.ShowIncant(choiceItem.suffix);
             suffixAbilityUI.ShowIncant(choiceItem.suffix);
 
+            // 레이아웃을 재구성합니다.
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)layout.transform);
         }
+
+        // 각 장비아이템 타입에 맞는 스탯을 설명합니다.
+        // 스텟은 양 라벨과 스탯 수치를 양사이드에 세팅합니다.
 
         private void ShowWeaponText(TextMeshProUGUI equipmentStatusText, Weapon weapon)
         {

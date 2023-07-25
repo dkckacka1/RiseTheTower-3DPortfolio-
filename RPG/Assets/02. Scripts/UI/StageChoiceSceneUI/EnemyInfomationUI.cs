@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// TODO : 주석 작성은 여기서부터 시작
+
 namespace RPG.Stage.UI
 {
     public class EnemyInfomationUI : MonoBehaviour
