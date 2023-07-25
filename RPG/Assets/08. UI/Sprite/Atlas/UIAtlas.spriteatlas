@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UIAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: bfb532b7caad9ce498d50305127eaae6, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 24fd8060887fb8b469391d84a47c3a71, type: 3}
+  - {fileID: 21300000, guid: b148aed0ccc4a3f4ab97aecdc721a235, type: 3}
+  - {fileID: 21300000, guid: 7070b571bffcd824795944934e7061de, type: 3}
+  - {fileID: 21300000, guid: 613c2e9197749ae4e835a2188ab39a67, type: 3}
+  - {fileID: 21300000, guid: d90691a1107f503418ce8ed6ee67b831, type: 3}
+  - {fileID: 21300000, guid: b463235268200f24da6c7027bbd94884, type: 3}
+  - {fileID: 21300000, guid: 5301a213119468d4095221144196dab5, type: 3}
+  - {fileID: 21300000, guid: 18ce50a3c298a11469ae0f7d826ae384, type: 3}
+  - {fileID: 21300000, guid: a821ea24d660d104baf05408194d535c, type: 3}
+  - {fileID: 21300000, guid: 00a5e4d62c2954644855411b4fd79962, type: 3}
+  - {fileID: 21300000, guid: fd28dff63945dbc4eaa6e45855124580, type: 3}
+  - {fileID: 21300000, guid: 3324daf767962254ba0767876d7b74c2, type: 3}
+  - {fileID: 21300000, guid: e3236548f3dc3b74bb7fc25310808896, type: 3}
+  - {fileID: 21300000, guid: df832f7896418564da9724810d01aa05, type: 3}
+  - {fileID: 21300000, guid: 0f0b1a0914e98cd42ace67dcaff8d93d, type: 3}
+  - {fileID: 21300000, guid: 0de4ab9a4a801a54593f779bca8db090, type: 3}
+  - {fileID: 21300000, guid: ff4417bbece2cf64c9a8ca28812b5e22, type: 3}
+  - {fileID: 21300000, guid: e3a0140cbfb1e6e4891713845d11e3da, type: 3}
+  - {fileID: 21300000, guid: 1b9e7f3cae43a0a448f45375ef06af09, type: 3}
+  - {fileID: 21300000, guid: a47affbcaaa9bd34db165e130f53efe7, type: 3}
+  - {fileID: 21300000, guid: 39d90acce69b5d147a984a9a4da96d8a, type: 3}
+  - {fileID: 21300000, guid: 3447b90dcf3f9ad44964f41b95ea92c6, type: 3}
+  - {fileID: 21300000, guid: 212551ad605f2c54795d552f9a2d93d7, type: 3}
+  - {fileID: 21300000, guid: 61856f4eb2847c84b9e00a8f8defb286, type: 3}
+  - {fileID: 21300000, guid: f5988e5e01e9a594f9c2b68bff343b5d, type: 3}
+  - {fileID: 21300000, guid: e97fb37e18f27984eb20ce5dc9564359, type: 3}
+  - {fileID: 21300000, guid: 59e8e7ee083ad2d468d8bf635ca36aea, type: 3}
+  - {fileID: 21300000, guid: d12b77feed7ea2e48be05fb1e175826c, type: 3}
+  - {fileID: 21300000, guid: 968e43dff77f1c446ac5e70d1e537956, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Frame Square 4
+  - Frame 4
+  - Stripe_BG2
+  - Plank 1
+  - CircleButton (3)
+  - Frame 1
+  - Chain
+  - Object_03
+  - CircleFrame1
+  - Title_01
+  - MainPanel
+  - CircleButton (2)
+  - HealthBar
+  - plank 2
+  - Frame Square 5
+  - Frame 2
+  - Frame Square 3
+  - Object_01
+  - Frame 3
+  - Title_02
+  - Object_02
+  - tower
+  - Frame Square 2
+  - CircleFrame2
+  - Plankshadow
+  - Stripe_BG1
+  - Frame Square 1
+  - CircleButton (1)
+  - plank 3
+  m_RenderDataMap: {}
+  m_Tag: UIAtlas
+  m_IsVariant: 0
