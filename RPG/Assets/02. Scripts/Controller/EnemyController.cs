@@ -32,9 +32,9 @@ namespace RPG.Battle.Control
             return (controller != null);
         }
 
-        public override void DeadEvent()
+        public override void DeadController()
         {
-            base.DeadEvent();
+            base.DeadController();
         }
 
         public void LootingItem()

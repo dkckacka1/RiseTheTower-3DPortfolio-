@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RPG.Battle.Control;
 
+/*
+ * 상태의 기본 정의
+ */
+
 namespace RPG.Battle.AI
 {
     public abstract class State
     {
-        protected Controller controller;
+        protected Controller controller;    // 현재 컨트롤러
 
         public State(Controller controller)
         {

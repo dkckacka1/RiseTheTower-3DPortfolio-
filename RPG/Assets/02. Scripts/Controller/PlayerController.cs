@@ -56,9 +56,9 @@ namespace RPG.Battle.Control
             BattleManager.BattleUI.InitAbility(status.currentHelmet, status.currentPants, battleStatus);
         }
 
-        public override void DeadEvent()
+        public override void DeadController()
         {
-            base.DeadEvent();
+            base.DeadController();
         }
 
         public override bool SetTarget(out Controller controller)

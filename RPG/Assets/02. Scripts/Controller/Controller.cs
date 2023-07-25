@@ -235,7 +235,7 @@ namespace RPG.Battle.Control
             }
         }
 
-        public virtual void DeadEvent()
+        public virtual void DeadController()
         {
             BattleManager.Instance.CharacterDead(this);
         }

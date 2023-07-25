@@ -3,35 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/*
+ * 전투 캐릭터의 디버프 상황을 보여주는 UI
+ */
+
 namespace RPG.Battle.UI
 {
     public class DebuffUI : MonoBehaviour
     {
         [Header("Bloody")]
-        [SerializeField] GameObject bloodyObject;
-        [SerializeField] TextMeshProUGUI remainBloodyText;
-        int bloodyOverlapping;
+        [SerializeField] GameObject bloodyObject;           // 출혈 상태 오브젝트
+        [SerializeField] TextMeshProUGUI remainBloodyText;  // 남은 출혈 시간
+        int bloodyOverlapping;                              // 출혈 중첩 횟수
 
         [Header("Curse")]
-        [SerializeField] GameObject curseObject;
-        [SerializeField] TextMeshProUGUI remainCurseText;
+        [SerializeField] GameObject curseObject;            // 저주 상태 오브젝트
+        [SerializeField] TextMeshProUGUI remainCurseText;   // 남은 저주 시간
 
         [Header("Fear")]
-        [SerializeField] GameObject FearObject;
-        [SerializeField] TextMeshProUGUI remainFearText;
+        [SerializeField] GameObject FearObject;             // 공포 상태 오브젝트
+        [SerializeField] TextMeshProUGUI remainFearText;    // 남은 공포 시간
 
         [Header("Paralysis")]
-        [SerializeField] GameObject paralysisObject;
-        [SerializeField] TextMeshProUGUI remainParalysisText;
+        [SerializeField] GameObject paralysisObject;            // 마비 상태 오브젝트
+        [SerializeField] TextMeshProUGUI remainParalysisText;   // 남은 마비 시간
 
         [Header("Stern")]
-        [SerializeField] GameObject sternObject;
-        [SerializeField] TextMeshProUGUI remainSternText;
+        [SerializeField] GameObject sternObject;                // 기절 상태 오브젝트
+        [SerializeField] TextMeshProUGUI remainSternText;       // 남은 기절 시간
 
         [Header("Temptation")]
-        [SerializeField] GameObject TemptationObject;
-        [SerializeField] TextMeshProUGUI remainTemptationText;
+        [SerializeField] GameObject TemptationObject;           // 유혹 상태 오브젝트
+        [SerializeField] TextMeshProUGUI remainTemptationText;  // 남은 유혹 시간 
 
+        // 모든 디버프 UI를 초기화합니다..
         public void ResetAllDebuff()
         {
             ResetDebuff(DebuffType.Stern);
@@ -42,6 +47,7 @@ namespace RPG.Battle.UI
             ResetDebuff(DebuffType.Curse);
         }
 
+        // 디버프 UI를 초기화합니다.
         public void ResetDebuff(DebuffType type)
         {
             switch (type)
@@ -68,6 +74,7 @@ namespace RPG.Battle.UI
             }
         }
 
+        // 디버브 UI를 보여줍니다
         public void InitDebuff(DebuffType type)
         {
             switch (type)
@@ -97,6 +104,7 @@ namespace RPG.Battle.UI
             }
         }
 
+        // 디버프 UI를 숨겨줍니다.
         public void ReleaseDebuff(DebuffType type)
         {
             switch (type)
@@ -126,8 +134,10 @@ namespace RPG.Battle.UI
             }
         }
 
+        // 디버프 UI를 보여줍니다.
         public void ShowDebuff(DebuffType type, float duration)
         {
+            // 알맞는 UI 오브젝트를 보여주고 남은 시간을 표기합니다.
             switch (type)
             {
                 case DebuffType.Stern:
