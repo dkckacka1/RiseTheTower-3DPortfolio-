@@ -84,7 +84,9 @@ namespace RPG.Battle.Control
             if (BattleManager.Instance == null) return;
             if (BattleManager.Instance.currentBattleState != BattleSceneState.Battle) return;
 
+            // 현재 상태를 판단합니다.
             stateContext.SetState(CheckState());
+            // 현재 상태의 동작을 수행합니다.
             stateContext.Update();
         }
 

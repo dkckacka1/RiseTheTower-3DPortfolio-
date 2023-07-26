@@ -13,14 +13,15 @@ using RPG.Main.Audio;
 
 /*
  * 전투를 관리하는 매니저 클래스
- * ORDER : #1) 싱글턴 패턴 사용 예시
  */
 
 namespace RPG.Battle.Core
 {
     public class BattleManager : MonoBehaviour
     {
+        // ORDER : #1) 싱글턴 패턴 사용 예시
         // 싱글톤 클래스
+        private static BattleManager instance;
         public static BattleManager Instance
         {
             get
@@ -34,26 +35,27 @@ namespace RPG.Battle.Core
                 return instance;
             }
         }
-        private static BattleManager instance;
+        private static BattleSceneUIManager battleUI;                           // 전투 UI 관리 매니저
         public static BattleSceneUIManager BattleUI
         {
             get
             {
                 if (instance == null)
                 {
-                    Debug.Log("BattleManager is NULL");
+                    Debug.LogWarning("BattleManager is NULL");
                     return null;
                 }
                 return battleUI;
             }
         }
+        private static ObjectPooling objectPool;                                // 오브젝트 풀
         public static ObjectPooling ObjectPool
         {
             get
             {
                 if (instance == null)
                 {
-                    Debug.Log("BattleManager is NULL");
+                    Debug.LogWarning("BattleManager is NULL");
                     return null;
                 }
                 return objectPool;
@@ -63,8 +65,6 @@ namespace RPG.Battle.Core
         [Header("BattleCore")]
         // Component
         public BattleSceneState currentBattleState = BattleSceneState.Default;  // 현재 전투 상태
-        private static BattleSceneUIManager battleUI;                           // 전투 UI 관리 매니저
-        private static ObjectPooling objectPool;                                // 오브젝트 풀
 
 
         [Header("Controller")]
@@ -492,6 +492,7 @@ namespace RPG.Battle.Core
         public T ReturnNearDistanceController<T>(Transform transform) where T : Controller
         {
             if (typeof(T) == typeof(PlayerController))
+            // 찾는 컨트롤러가 플레이어 컨트롤러라면
             {
                 if (livePlayer != null)
                 {
@@ -499,13 +500,16 @@ namespace RPG.Battle.Core
                 }
             }
             else if (typeof(T) == typeof(EnemyController))
+                // 찾는 컨트롤러가 에너미컨트롤러 라면
             {
+                // 생존한 적리스트를 가져옵니다.
                 List<EnemyController> list = liveEnemies.Where(enemy => !enemy.battleStatus.isDead).ToList();
+                // 생존한 적이 없다면 null 리턴
                 if (list.Count == 0) return null;
 
+                // 리스트를 순회하면서 가장 가까운 적을 찾습니다.
                 Controller nearTarget = list[0];
                 float distance = Vector3.Distance(nearTarget.transform.position, transform.position);
-
                 for (int i = 1; i < list.Count; i++)
                 {
                     float newDistance = Vector3.Distance(list[i].transform.position, transform.position);
@@ -517,6 +521,7 @@ namespace RPG.Battle.Core
                     }
                 }
 
+                // T 타입으로 형변환 해서 전달 해줍니다.
                 return (T)nearTarget;
             }
 

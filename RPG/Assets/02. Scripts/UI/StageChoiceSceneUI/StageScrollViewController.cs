@@ -8,8 +8,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // ORDER : #8) 스테이지 선택 씬에서 무한 스크롤링 UI 구현
-// 참조 URL : https://wonjuri.tistory.com/entry/Unity-UI-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%B7%B0-%EC%A0%9C%EC%9E%91
-// 포트폴리오의 스크롤뷰는 밑에서부터 위로 올라가기 때문에 참조 URL과 구성이 다릅니다.
+// 참고 URL : https://wonjuri.tistory.com/entry/Unity-UI-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%B7%B0-%EC%A0%9C%EC%9E%91
+// 포트폴리오의 스크롤뷰는 밑에서부터 위로 올라가기 때문에 참고한 URL과 구성이 다릅니다.
 /*
  * 무한 스크롤뷰 UI 클래스입니다
  */

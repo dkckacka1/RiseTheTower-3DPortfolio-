@@ -34,10 +34,6 @@ namespace RPG.UnUsed
     {
         public string ExcelTester()
         {
-
-
-
-
             return "";
         }
     }

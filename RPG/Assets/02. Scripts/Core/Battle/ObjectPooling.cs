@@ -1,12 +1,8 @@
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Battle.UI;
 using RPG.Battle.Control;
 using RPG.Character.Status;
-using UnityEditor;
-using RPG.Battle.Ability;
 using RPG.Character.Equipment;
 using RPG.Core;
 using UnityEngine.Events;
@@ -241,7 +237,7 @@ namespace RPG.Battle.Core
             return getAbility;
         }
 
-        // 스킬 이펙트에 별도의 효과가 있을 시 효과를 적요앟고 오브젝트 풀에서 가져옵니다
+        // 스킬 이펙트에 별도의 효과가 있을 시 효과를 적용하고 오브젝트 풀에서 가져옵니다
         public Ability.Ability GetAbility(int abilityID, Transform starPos, UnityAction<BattleStatus> hitAction = null, UnityAction<BattleStatus> chainAction = null, Space space = Space.Self)
         {
             Ability.Ability getAbility;

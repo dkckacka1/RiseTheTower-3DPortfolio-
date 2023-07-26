@@ -19,7 +19,9 @@ namespace RPG.Character.Equipment
         // ORDER : #6) 현재 무기 외형에 따라 나올 애니메이션 컨트롤러를 변경
         public void EquipWeapon(int weaponApparenceID, weaponHandleType weaponType)
         {
+            // 현재 무기 외형 ID 값을 가져옵니다.
             var childCount =  weaponHandle.childCount;
+            // 현재 무기 외형을 제외한 다른 외형은 모두 꺼줍니다.
             for (int i = 0; i < childCount; i++)
             {
                 weaponHandle.GetChild(i).gameObject.SetActive(false);
@@ -29,7 +31,9 @@ namespace RPG.Character.Equipment
             Animator animator;
             if ((animator = GetComponent<Animator>()) != null)
             {
-
+                // 현재 무기의 외형에 따라 애니메이션 컨트롤러를 변경합니다.
+                // 런타임 도중 애니메이터의 애니메이션 컨트롤러를 변경하려면
+                // animator.runtimeAnimatorController를 변경해주어야 한다.
                 switch (weaponType)
                 {
                     case weaponHandleType.OneHandedWeapon:
@@ -42,11 +46,8 @@ namespace RPG.Character.Equipment
                         break;
                 }
             }
-            else
-            {
-                Debug.Log("Animator is Null");
-            }
         }
+
         public void SetCurrentAnimation(Animator animator, string prevAttack)
         {
             RuntimeAnimatorController myController = animator.runtimeAnimatorController;
