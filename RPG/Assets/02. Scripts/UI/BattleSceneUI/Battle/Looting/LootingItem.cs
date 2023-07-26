@@ -91,8 +91,7 @@ namespace RPG.Battle.UI
             if (timer < 1.0f)
             {
                 timer += Time.deltaTime * timeRate;
-                // TODO : Why Slerp??
-                transform.position = Vector3.Slerp(startPos, endPos, timer);
+                transform.position = Vector3.Lerp(startPos, endPos, timer);
             }
         }
     }

@@ -69,12 +69,15 @@ namespace RPG.Battle.Ability
 
             foreach (var enemycontroller in BattleManager.Instance.liveEnemies)
             {
-                // 가장 가까운 순으로 정렬한뒤 타겟리스트에 없는 대상이라면
+                // 가장 가까운 순으로 정렬한뒤 타겟리스트에 없는 대상이고 죽지 않았다면
                 // 타겟 리스트에 넣어줍니다.
                 if (targetList.Find(enemy => enemycontroller == enemy) == null)
                 {
-                    nextTarget = enemycontroller;
-                    return true;
+                    if(!enemycontroller.battleStatus.isDead)
+                    {
+                        nextTarget = enemycontroller;
+                        return true;
+                    }
                 }
             }
 

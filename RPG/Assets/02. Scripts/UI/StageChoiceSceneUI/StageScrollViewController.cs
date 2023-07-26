@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// ORDER : 스테이지 선택 씬에서 무한 스크롤링 UI 구현
+// ORDER : #8) 스테이지 선택 씬에서 무한 스크롤링 UI 구현
 // 참조 URL : https://wonjuri.tistory.com/entry/Unity-UI-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%B7%B0-%EC%A0%9C%EC%9E%91
+// 포트폴리오의 스크롤뷰는 밑에서부터 위로 올라가기 때문에 참조 URL과 구성이 다릅니다.
 /*
  * 무한 스크롤뷰 UI 클래스입니다
  */
@@ -26,7 +27,7 @@ namespace RPG.Stage.UI
         [SerializeField]
         private float spacingHeight = 4.0f; // 각 셀의 간격
 
-        private LinkedList<StageFloorUI> cells = new LinkedList<StageFloorUI>(); // 셀 저장 리스트
+        private LinkedList<StageFloorUI> cellList = new LinkedList<StageFloorUI>(); // 셀 저장 리스트
 
         private Rect visibleRect; // 리스트 항목을 셀의 형태로 표시하는 범위를 나타내는 사각형
 
@@ -106,8 +107,9 @@ namespace RPG.Stage.UI
             UpdateScrollViewSize(); // 스크롤할 내용의 크기를 갱신한다.
             UpdateVisibleRect(); // visibleRect를 갱신한다.
 
-            if (cells.Count < 1)
-                // 셀이 하나도 없을 때는 보여줄 범위에 맞게 
+            if (cellList.Count < 1)
+                // 셀이 하나도 없을 경우
+                // 기준이 될 셀을 하나 작성해야합니다.
             {
                 Vector2 cellBottom = new Vector2(0.0f, 0.0f); // 현재 만들 셀의 바닥 위치
 
@@ -115,16 +117,18 @@ namespace RPG.Stage.UI
                 {
                     float cellHeight = GetCellHeightAtIndex(i); // 만들 셀의 높이
                     Vector2 cellTop = cellBottom + new Vector2(0.0f, cellHeight);   // 만들 셀의 꼭대기 위치 (셀의 바닥에서 부터 높이만큼 더하면 꼭대기 값이 된다.)
-                    // 보여줄 뷰안에 셀이 꽉차도록 새로운 셀을 생성합니다. 
                     if ((cellBottom.y <= visibleRect.y && cellBottom.y >= visibleRect.y - visibleRect.height) ||
-                        //
                         (cellTop.y <= visibleRect.y && cellTop.y >= visibleRect.y - visibleRect.height))
+                        // 만들어아햘 셀의 렉트값이 보여줄 범위 내에 있을경우
                     {
+                        // 셀을 생성합니다.
                         StageFloorUI cell = CreateCellForIndex(i);
+                        // 셀의 위치를 보여줄 범위 내에 있도록 수정합니다.
                         cell.Bottom = cellBottom;
                         break;
                     }
 
+                    // 렉트 값이 보여줄 범위 내에 있을 때 까지 셀 생성 위치를 수정합니다.
                     cellBottom = cellTop + new Vector2(0.0f, spacingHeight);
                 }
 
@@ -135,16 +139,15 @@ namespace RPG.Stage.UI
             {
                 // 이미 셀이 있을 때는 첫 번째 셀 부터 순서대로 대응하는 리스트 항목의
                 // 인덱스를 다시 설정하고 위치와 내용을 갱신한다.
-                LinkedListNode<StageFloorUI> node = cells.First;
+                LinkedListNode<StageFloorUI> node = cellList.First;
                 UpdateCellForIndex(node.Value, node.Value.Index);
-                node = node.Next;
 
+                node = node.Next;
                 while (node != null)
+                    // 다음 노드가 없을때까지 반복합니다.
                 {
                     UpdateCellForIndex(node.Value, node.Previous.Value.Index + 1);
                     node.Value.Top = node.Previous.Value.Bottom + new Vector2(0.0f, -spacingHeight);
-                    Debug.Log(node.Value.Top);
-                    Debug.Log(node.Previous.Value.Bottom);
                 }
 
                 // visibleRect의 범위에 빈 곳이 있으면 셀을 작성한다.
@@ -206,6 +209,7 @@ namespace RPG.Stage.UI
             Vector2 offsetMin = cell.CachedRectTrasnfrom.offsetMin;
             Vector2 offsetMax = cell.CachedRectTrasnfrom.offsetMax;
 
+            // 셀이 스크롤뷰 컨텐트의 자식오브젝트로 설정합니다.
             cell.transform.SetParent(cellBase.transform.parent);
 
             // 셀의 스케일과 크기를 설정한다.
@@ -217,10 +221,10 @@ namespace RPG.Stage.UI
             // 지정된 인덱스가 붙은 리스트 항목에 대응하는 셀로 내용을 갱신한다.
             UpdateCellForIndex(cell, index);
 
-            cells.AddLast(cell);
+            // 생성한 셀을 셀리스트에 넣어줍니다.
+            cellList.AddLast(cell);
 
             return cell;
-
         }
 
         /// <summary>
@@ -234,9 +238,10 @@ namespace RPG.Stage.UI
             cell.Index = index;
 
             if (cell.Index >= 0 && cell.Index <= stageDataList.Count - 1)
+            // 셀에 대응하는 리스트 항목이 있다면 셀을 활성화해서 내용을 갱신하고 높이를 설정한다.
             {
-                // 셀에 대응하는 리스트 항목이 있다면 셀을 활성화해서 내용을 갱신하고 높이를 설정한다.
                 cell.gameObject.SetActive(true);
+                // 셀에 스테이지 데이터를 넘겨줍니다.
                 cell.UpdateContent(stageDataList[cell.Index]);
                 cell.Height = GetCellHeightAtIndex(cell.Index);
             }
@@ -266,22 +271,27 @@ namespace RPG.Stage.UI
         /// </summary>
         private void SetFillVisibleRectWithCells()
         {
-            if (cells.Count < 1)
+            if (cellList.Count < 1)
+                // 셀리스트가 비었다면 리턴
             {
                 return;
             }
 
             // 표시된 마지막 셀에 대응하는 리스트 항목의 다음 리스트 항목이 있고
             // 또한 그 셀이 visibleRect의 범위에 들어온다면 대응하는 셀을 작성한다.
-            StageFloorUI lastCell = cells.Last.Value;
+            StageFloorUI lastCell = cellList.Last.Value; // 연결리스트 꼬리 셀을 참조합니다.
             int nextCellDataIndex = lastCell.Index + 1;
-            Vector2 nextCellBottom = lastCell.Top + new Vector2(0.0f, -spacingHeight);
+            Vector2 nextCellBottom = lastCell.Top + new Vector2(0.0f, -spacingHeight);  // 다음 셀의 바닥 값 = 마지막 셀의 높이 값 + 높이 간격
 
             while (nextCellDataIndex < stageDataList.Count && nextCellBottom.y < visibleRect.y + visibleRect.height)
+                // 만들 데이터가 존재하며, 다음셀의 바닥이 보여줄 범위 내에 존재한다면
             {
+                // 셀을 생성합니다.
                 StageFloorUI cell = CreateCellForIndex(nextCellDataIndex);
+                // 만든 셀의 위치를 조정합니다.
                 cell.Bottom = nextCellBottom;
 
+                // 다음셀을 만들 수 있도록 세팅합니다.
                 lastCell = cell;
                 nextCellDataIndex = lastCell.Index + 1;
                 nextCellBottom = lastCell.Top + new Vector2(0.0f, -spacingHeight);
@@ -295,10 +305,16 @@ namespace RPG.Stage.UI
         /// <param name="scrollPos">Scroll position.</param>
         private void OnScrollPosChanged(Vector2 scrollPos)
         {
+            // 스테이지 스크롤 뷰가 움직였다면 움직인 위치에 따라 백그라운드 이미지의 UV값을 수정합니다.
+            // UV값을 수정해서 백그라운드가 연속되도록 만듭니다.
             Rect uvRect = BackGroundImage.uvRect;
             uvRect.y = scrollPos.y * (CachedScrollRect.content.rect.height / contentBackGroundSpeed);
             BackGroundImage.uvRect = uvRect;
+
+            // 보여줄 범위를 갱신합니다.
             UpdateVisibleRect();
+
+            // 스크롤뷰가 아래로 움직였는지 위로 움직였는지 체크해서 셀을 업데이트합니다.
             UpdateCells((scrollPos.y < prevScrollPos.y) ? 1 : -1);
             prevScrollPos = scrollPos;
         }
@@ -306,43 +322,60 @@ namespace RPG.Stage.UI
         // 셀을 재사용하여 표시를 갱신하는 함수
         private void UpdateCells(int scrollDirection)
         {
-            if (cells.Count < 1)
+            if (cellList.Count < 1)
+                // 셀리스트가 비어있다면 리턴
             {
                 return;
             }
 
             if (scrollDirection > 0)
-            {
-                // 위로 스크롤하고 있을 때는 visibleRect에 지정된 범위보다 위에 있는 셀을
+                // 위로 스크롤하고 있을 때는 보여줄 범위보다 위에 있는 셀을
                 // 아래로 향해 순서대로 이동시켜 내용을 갱신한다.
-                StageFloorUI lastCell = cells.Last.Value;
+            {
+                StageFloorUI lastCell = cellList.Last.Value;
                 while (lastCell.Bottom.y > -visibleRect.y + visibleRect.height)
+                    // 마지막 셀의 바닥값이 보여줄 범위의 꼭대기 지점을 지나쳤다면
                 {
-                    StageFloorUI firstCell = cells.First.Value;
+                    // 마지막 셀에 첫번째 셀이 가지고 있던 정보의 전 정보를 넣어줍니다.
+                    StageFloorUI firstCell = cellList.First.Value;
                     UpdateCellForIndex(lastCell, firstCell.Index - 1);
+
+                    // 마지막 셀의 꼭대기가 첫번째 셀의 바닥에 위치할수 있도록 위치를 조정합니다.
                     lastCell.Top = firstCell.Bottom + new Vector2(0.0f, -spacingHeight);
 
-                    cells.AddFirst(lastCell);
-                    cells.RemoveLast();
-                    lastCell = cells.Last.Value;
+                    // 마지막셀을 연결리스트의 첫번째 노드로 만듭니다.
+                    cellList.AddFirst(lastCell);
+                    cellList.RemoveLast();
+
+                    // 연결리스트의 구조가 변경되었으니 마지막셀을 갱신합니다.
+                    lastCell = cellList.Last.Value;
                 }
 
-                // visibleRect에 지정된 범이 안에 빈 곳이 있으면 셀을 작성한다.
-                //SetFillVisibleRectWithCells();
             }
             else if (scrollDirection < 0)
+                // 아래로 스크롤하고 있을 때는 보여줄 범위보다 밑에 있는 셀을
+                // 위로 향해 순서대로 이동시켜 내용을 갱신합니다.
             {
-                StageFloorUI firstCell = cells.First.Value;
+                StageFloorUI firstCell = cellList.First.Value;
                 while (firstCell.Top.y < -visibleRect.y)
+                    // 첫번째 셀의 꼭대기 값이 보여줄 범위의 바닥 지점을 지나쳤다면
                 {
-                    StageFloorUI lastCell = cells.Last.Value;
+                    //첫번째 셀에 마지막 셀이 가지고 있던 정보의 다음 정보를 넣어줍니다.
+                    StageFloorUI lastCell = cellList.Last.Value;
                     UpdateCellForIndex(firstCell, lastCell.Index + 1);
+
+                    // 첫번째 셀의 바닥값이 마지막셀의 꼭대기가 될 수 있도록 위치를 조정합니다.
                     firstCell.Bottom = lastCell.Top + new Vector2(0.0f, spacingHeight);
 
-                    cells.AddLast(firstCell);
-                    cells.RemoveFirst();
-                    firstCell = cells.First.Value;
+                    // 첫번째 셀을 연결리스트의 마지막 노드로 만듭니다.
+                    cellList.AddLast(firstCell);
+                    cellList.RemoveFirst();
+
+                    // 연결리스트의 구조가 변경되었으니 첫번째 셀을 갱신합니다.
+                    firstCell = cellList.First.Value;
                 }
+
+                // 만약 스크롤 뷰를 움직이면서 빈 공간이 나타날 수 있으므로 빈공간을 채워줍니다.
                 SetFillVisibleRectWithCells();
             }
         }

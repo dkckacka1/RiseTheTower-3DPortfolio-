@@ -16,7 +16,7 @@ namespace RPG.Character.Equipment
             Instantiate(item, weaponHandle);
         }
 
-        // ORDER : 현재 무기 외형에 따라 나올 애니메이션 컨트롤러를 변경
+        // ORDER : #6) 현재 무기 외형에 따라 나올 애니메이션 컨트롤러를 변경
         public void EquipWeapon(int weaponApparenceID, weaponHandleType weaponType)
         {
             var childCount =  weaponHandle.childCount;
