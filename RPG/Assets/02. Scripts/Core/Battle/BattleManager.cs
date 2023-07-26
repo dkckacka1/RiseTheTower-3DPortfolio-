@@ -13,7 +13,7 @@ using RPG.Main.Audio;
 
 /*
  * 전투를 관리하는 매니저 클래스
- * ORDER : #1) 싱글턴 패턴 예시
+ * ORDER : #1) 싱글턴 패턴 사용 예시
  */
 
 namespace RPG.Battle.Core
