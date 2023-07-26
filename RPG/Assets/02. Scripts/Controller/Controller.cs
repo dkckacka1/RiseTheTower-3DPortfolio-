@@ -180,7 +180,7 @@ namespace RPG.Battle.Control
         #endregion
 
         #region CheckState
-        // ORDER : 현재 상태에 따라 컨트롤러의 동작을 변경하는 상태패턴 구현
+        // ORDER : #3) 현재 상태에 따라 컨트롤러의 동작을 변경하는 상태패턴 구현
         private IState CheckState()
         {
             if (battleStatus.isDead)

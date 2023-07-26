@@ -107,7 +107,7 @@ namespace RPG.Battle.UI
             });
         }
 
-        // ORDER : 전투 시 플레이어 캐릭터의 바지와 헬멧의 인챈트 효과를 장착합니다.
+        // ORDER : #7) 전투 시 플레이어 캐릭터의 바지와 헬멧의 인챈트를 확인하여 액티브 스킬을 장착
         // 액티브 스킬을 세팅합니다.
         public void InitAbility(Helmet helmet, Pants pants, BattleStatus status)
         {

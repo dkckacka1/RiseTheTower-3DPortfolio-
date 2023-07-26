@@ -44,7 +44,10 @@ namespace RPG.Battle.Behaviour
         public void ResetNav()
         {
             if (nav.enabled == true)
+            {
+                nav.velocity = Vector3.zero;
                 nav.ResetPath();
+            }
         }
 
         // 대상 트랜스폼의 위치로 이동합니다.

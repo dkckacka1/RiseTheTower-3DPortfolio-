@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 9
   playerSpawnPosition: {x: 20, y: 0, z: 0}
-  enemyDatas:
-  - enemyID: 4
+  enemyDatas: 0800000008000000
   ConsumEnergy: 10
