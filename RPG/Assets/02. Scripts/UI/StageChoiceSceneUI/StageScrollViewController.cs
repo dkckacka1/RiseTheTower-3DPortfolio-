@@ -9,10 +9,13 @@ using UnityEngine.UI;
 
 // ORDER : 스테이지 선택 씬에서 무한 스크롤링 UI 구현
 // 참조 URL : https://wonjuri.tistory.com/entry/Unity-UI-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%B7%B0-%EC%A0%9C%EC%9E%91
+/*
+ * 무한 스크롤뷰 UI 클래스입니다
+ */
+
 
 namespace RPG.Stage.UI
 {
-
     [RequireComponent(typeof(ScrollRect))]
     [RequireComponent(typeof(RectTransform))]
     public class StageScrollViewController : MonoBehaviour
@@ -29,12 +32,12 @@ namespace RPG.Stage.UI
 
         private Vector2 prevScrollPos; // 바로 전의 스크롤 위치를 저장
 
-        public RectTransform CachedRectTransform => GetComponent<RectTransform>();
-        public ScrollRect CachedScrollRect => GetComponent<ScrollRect>();
+        public RectTransform CachedRectTransform => GetComponent<RectTransform>();  // 렉트 트랜스폼 참조
+        public ScrollRect CachedScrollRect => GetComponent<ScrollRect>();   // 스크롤 렉트 참조
 
-        public RawImage BackGroundImage;
+        public RawImage BackGroundImage;    // 현재 백그라운드 이미지
 
-        [SerializeField] float contentBackGroundSpeed;
+        [SerializeField] float contentBackGroundSpeed;  // 스크롤함에 따라 이동할 백그라운드 이미지 속도
 
         private int nameIndex = 0;
 
@@ -46,9 +49,11 @@ namespace RPG.Stage.UI
             // Scroll Rect 컴포넌트의 OnvalueChanged이벤트의 이벤트 리스너를 설정한다.
             CachedScrollRect.onValueChanged.AddListener(OnScrollPosChanged);
 
+            // 게임 매니저로부터 스테이지 정보 리스트를 받아옵니다.
             if (GameManager.Instance != null)
             {
                 var list = GameManager.Instance.stageDataDic.ToList();
+                // 가장 낮은 층이 가장 밑에 있도록 정렬해줍니다.
                 list.Sort((value1, value2) => { return (value1.Value.ID > value2.Value.ID) ? 1 : -1; });
                 foreach (var stageData in list)
                 {
@@ -57,23 +62,16 @@ namespace RPG.Stage.UI
 
                 CachedScrollRect.SetLayoutHorizontal();
             }
-            else
-            {
-                var list = Resources.LoadAll<StageData>("Data/Stage");
-                foreach (var stageData in list)
-                {
-                    stageDataList.Add(stageData);
-                }
 
-                CachedScrollRect.SetLayoutHorizontal();
-            }
-
+            // 스크롤 뷰를 초기화합니다.
             InitializeTableView();
 
+            // 스테이지씬이 로드될때 1층을 보여줄 수 있도록 한다.
             CachedScrollRect.verticalNormalizedPosition = 0f;
         }
 
 
+        // 디버그용 기즈모
         private void OnDrawGizmosSelected()
         {
             Vector3[] corners = new Vector3[4];
@@ -109,23 +107,25 @@ namespace RPG.Stage.UI
             UpdateVisibleRect(); // visibleRect를 갱신한다.
 
             if (cells.Count < 1)
+                // 셀이 하나도 없을 때는 보여줄 범위에 맞게 
             {
-                // 셀이 하나도 없을 때는 visibleRect의 범위에 들어가는 첫 번째 리스트 항목을 찾아서
-                // 그에 대응하는 셀을 작성한다.
-                Vector2 cellTop = new Vector2(0.0f, 0.0f);
+                Vector2 cellBottom = new Vector2(0.0f, 0.0f); // 현재 만들 셀의 바닥 위치
+
                 for (int i = 0; i < stageDataList.Count; i++)
                 {
-                    float cellHeight = GetCellHeightAtIndex(i);
-                    Vector2 cellBottom = cellTop + new Vector2(0.0f, cellHeight);
-                    if ((cellTop.y <= visibleRect.y && cellTop.y >= visibleRect.y - visibleRect.height) ||
-                        (cellBottom.y <= visibleRect.y && cellBottom.y >= visibleRect.y - visibleRect.height))
+                    float cellHeight = GetCellHeightAtIndex(i); // 만들 셀의 높이
+                    Vector2 cellTop = cellBottom + new Vector2(0.0f, cellHeight);   // 만들 셀의 꼭대기 위치 (셀의 바닥에서 부터 높이만큼 더하면 꼭대기 값이 된다.)
+                    // 보여줄 뷰안에 셀이 꽉차도록 새로운 셀을 생성합니다. 
+                    if ((cellBottom.y <= visibleRect.y && cellBottom.y >= visibleRect.y - visibleRect.height) ||
+                        //
+                        (cellTop.y <= visibleRect.y && cellTop.y >= visibleRect.y - visibleRect.height))
                     {
                         StageFloorUI cell = CreateCellForIndex(i);
-                        cell.Bottom = cellTop;
+                        cell.Bottom = cellBottom;
                         break;
                     }
 
-                    cellTop = cellBottom + new Vector2(0.0f, spacingHeight);
+                    cellBottom = cellTop + new Vector2(0.0f, spacingHeight);
                 }
 
                 // visibleRect의 범위에 빈 곳이 있으면 셀을 작성한다.
@@ -155,12 +155,11 @@ namespace RPG.Stage.UI
         /// <summary>
         /// 셀의 높이값을 리턴하는 함수
         /// </summary>
-        /// <param name="index">Index.</param>
-        /// <returns>The cell Height at Index</returns>
         protected virtual float GetCellHeightAtIndex(int index)
         {
-            // 실제 값을 반환하는 처리는 상속한 클래스에서 구현한다.
-            // 셀마다 크기가 다를 경우 상속받은 클래스에서 재 구현한다.
+            // 실제 값을 반환하는 처리는 상속한 클래스에서 구현합니다.
+            // 셀마다 크기가 다를 경우 상속받은 클래스에서 재 구현합니다.
+            // 다만 나는 셀마다 크기가 동일하므로 기본 렉트 트랜스폼에서 높이를 반환합니다.
             return cellBase.GetComponent<RectTransform>().sizeDelta.y;
         }
 
@@ -172,15 +171,17 @@ namespace RPG.Stage.UI
             float contentHeight = 0.0f;
             for (int i = 0; i < stageDataList.Count; i++)
             {
+                // 전체 스테이지 데이터만큼 셀 노드의높이를 더해줍니다.
                 contentHeight += GetCellHeightAtIndex(i);
 
                 if (i > 0)
                 {
+                    // 만약 셀 사이의 간격이 있다면 추가로 더해줍니다.
                     contentHeight += spacingHeight;
                 }
             }
 
-            // 스크롤할 내용의 높이를 설정한다.
+            // 스크롤할 내용의 높이를 설정합니다.
             Vector2 sizeDelta = CachedScrollRect.content.sizeDelta;
             sizeDelta.y = contentHeight;
             CachedScrollRect.content.sizeDelta = sizeDelta;

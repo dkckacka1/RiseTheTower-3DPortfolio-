@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-// TODO : 주석 작성은 여기서부터 시작
+/*
+ * 스테이지의 적군 정보를 표시하는 UI 클래스
+ */
 
 namespace RPG.Stage.UI
 {
     public class EnemyInfomationUI : MonoBehaviour
     {
-        [SerializeField] TextMeshProUGUI enemyNameTxt;
+        [SerializeField] TextMeshProUGUI enemyNameTxt;      // 적 이름
 
         [Header("DropItemlist")]
-        [SerializeField] TextMeshProUGUI earnEnergyTxt;
-        [SerializeField] TextMeshProUGUI earnGachaTxt;
-        [SerializeField] TextMeshProUGUI earnIncantTxt;
-        [SerializeField] TextMeshProUGUI earnReinforceTxt;
+        [SerializeField] TextMeshProUGUI earnEnergyTxt;     // 드랍할 에너지양
+        [SerializeField] TextMeshProUGUI earnGachaTxt;      // 드랍할 수 있는 가챠 티켓
+        [SerializeField] TextMeshProUGUI earnIncantTxt;     // 드랍할 수 있는 인챈트 티켓
+        [SerializeField] TextMeshProUGUI earnReinforceTxt;  // 드랍할 수 있는 강화 티켓
 
+        // 적 정보를 표시합니다.
         public void ShowEnemyInfomation(EnemyData data, int enemyCount)
         {
             enemyNameTxt.text = data.enemyName;

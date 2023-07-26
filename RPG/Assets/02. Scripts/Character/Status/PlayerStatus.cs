@@ -4,15 +4,20 @@ using UnityEngine;
 using RPG.Character.Equipment;
 using RPG.Core; 
 
+/*
+ * 플레이어 스탯 클래스
+ */
+
 namespace RPG.Character.Status
 {
     public class PlayerStatus : Status
     {
-        public Weapon currentWeapon;
-        public Armor currentArmor;
-        public Helmet currentHelmet;
-        public Pants currentPants;
+        public Weapon currentWeapon;    // 현재 장착한 무기
+        public Armor currentArmor;      // 현재 장착한 갑옷
+        public Helmet currentHelmet;    // 현재 장착한 헬멧
+        public Pants currentPants;      // 현재 장착한 바지
 
+        // 현재 장비의 수치로 스탯을 세팅합니다.
         public void SetEquipment()
         {
             if (currentWeapon == null ||
@@ -40,9 +45,10 @@ namespace RPG.Character.Status
             MovementSpeed =         currentWeapon.MovementSpeed + currentPants.MovementSpeed;
         }
 
+        // 유저 정보를 통해서 스탯을 세팅합니다.
         public void SetPlayerStatusFromUserinfo(UserInfo userInfo)
         {
-            // 1.장비 장착
+            // 유저정보에서 각 장비 ID를 가져옵니다.
             WeaponData w_data;
             ArmorData a_data;
             HelmetData h_data;
@@ -52,10 +58,9 @@ namespace RPG.Character.Status
             GameManager.Instance.GetEquipmentData(userInfo.lastedHelmetID, out h_data);
             GameManager.Instance.GetEquipmentData(userInfo.lastedPantsID, out p_data);
 
-            // 1-1. 장비에 강화 수치 적용
-            // 1-2. 장비에 인챈트 적용
-            // 1-3. 장비 아이템 업데이트
 
+            // 각 장비에 강화 수치를 적용하고
+            // 인챈트를 적용시킵니다.
             if (w_data)
             {
                 Weapon weapon = new Weapon(w_data);
@@ -145,10 +150,11 @@ namespace RPG.Character.Status
                 Debug.LogError("Pants is null");
 
 
-            // 2.장비에 따른 스테이터스 변화해주기
+            // 각 장비를 세팅합니다.
             this.SetEquipment();
         }
 
+        // 로비에서의 플레이어 스탯 정보로 전투 스텟을 세팅할 때 사용합니다.
         public void SetPlayerStatusFromStatus(PlayerStatus status, CharacterAppearance ap = null)
         {
             currentWeapon = new Weapon(status.currentWeapon);
@@ -165,6 +171,7 @@ namespace RPG.Character.Status
             SetPlayerDefaultStatus(status);
         }
 
+        // 각 스탯 수치를 갱신합니다.
         public void SetPlayerDefaultStatus(PlayerStatus status)
         {
             MaxHp = status.MaxHp;
@@ -184,6 +191,7 @@ namespace RPG.Character.Status
             MovementSpeed = status.MovementSpeed;
         }
 
+        // 인챈트에 따로 효과가 있는지 확인 합니다.
         public bool hasAbility()
         {
             //Debug.Log($"" +
@@ -195,6 +203,7 @@ namespace RPG.Character.Status
         }
 
         #region 장비_장착
+        // 각 장비를 변경합니다.
         public void EquipItem(Weapon weapon)
         {
             currentWeapon = weapon;

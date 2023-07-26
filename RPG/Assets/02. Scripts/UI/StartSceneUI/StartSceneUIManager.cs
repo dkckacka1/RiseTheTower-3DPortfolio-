@@ -4,6 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * 스타트씬을 전체적으로 관리할 UI 매니저 클래스
+ */
+
 namespace RPG.Start.UI
 {
     public class StartSceneUIManager : MonoBehaviour
@@ -13,6 +17,7 @@ namespace RPG.Start.UI
             StartCoroutine(MainSceneLoad());
         }
 
+        // 메인씬으로 이동합니다.
         IEnumerator MainSceneLoad()
         {
             // 게임매니저 데이터 로드
