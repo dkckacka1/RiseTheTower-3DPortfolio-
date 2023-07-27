@@ -6,22 +6,18 @@ using RPG.Battle.Core;
 using RPG.Battle.Behaviour;
 using RPG.Battle.AI;
 
+/*
+ * 적 캐릭터의 컨트롤러 클래스
+ */
+
 namespace RPG.Battle.Control
 {
     public class EnemyController : Controller
     {
-        public override void SetUp()
-        {
-            base.SetUp();
-        }
-
-        public override void Init()
-        {
-            base.Init();
-        }
-
+        // 대상을 지정합니다.
         public override bool SetTarget(out Controller controller)
         {
+            // 가까운 플레이어 컨트롤러를 지정합니다.
             controller = BattleManager.Instance.ReturnNearDistanceController<PlayerController>(transform);
             if(controller != null)
             {
@@ -32,11 +28,7 @@ namespace RPG.Battle.Control
             return (controller != null);
         }
 
-        public override void DeadController()
-        {
-            base.DeadController();
-        }
-
+        // 아이템을 루팅합니다.
         public void LootingItem()
         {
             BattleManager.Instance.LootingItem(this);

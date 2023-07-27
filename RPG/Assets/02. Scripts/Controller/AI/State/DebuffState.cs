@@ -31,7 +31,7 @@ namespace RPG.Battle.AI
         public void OnStart()
         {
             // 디버프 상태에 진입하면 AI상태를 디버프 상태로 변경합니다.
-            controller.currentAIState = AIState.Debuff;
+            controller.currentState = AIState.Debuff;
             // 공격, 이동, 유휴 애니메이션을취소합니다.
             controller.animator.ResetTrigger("Attack");
             controller.animator.ResetTrigger("Move");

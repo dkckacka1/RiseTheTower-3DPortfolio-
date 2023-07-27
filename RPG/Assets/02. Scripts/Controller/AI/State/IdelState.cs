@@ -19,7 +19,7 @@ namespace RPG.Battle.AI
         // 유휴 상태에 진입하면 유휴 애니메이션을 세팅합니다.
         public void OnStart()
         {
-            controller.currentAIState = AIState.Idle;
+            controller.currentState = AIState.Idle;
             controller.animator.SetTrigger("Idle");
         }
 

@@ -56,7 +56,7 @@ namespace RPG.Battle.UI
                 if ((int)(showGain + 0.5) >= gain)
                 {
                     // 텍스트를 업데이트하고 반복문을 중단합니다.
-                    txt.text = showGain.ToString(gain.ToString());
+                    txt.text = gain.ToString();
                     break;
                 }
             }

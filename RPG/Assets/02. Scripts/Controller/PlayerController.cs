@@ -8,6 +8,10 @@ using RPG.Character.Status;
 using RPG.Character.Equipment;
 using UnityEngine.Events;
 
+/*
+ * 플레이어 캐릭터의 컨트롤러
+ */
+
 namespace RPG.Battle.Control
 {
     public class PlayerController : Controller
@@ -15,11 +19,13 @@ namespace RPG.Battle.Control
         public override void SetUp()
         {
             base.SetUp();
-            AddAttackEvent();
+            // 세팅 시 장비 인챈트에 따른 이벤트를 구독해줍니다.
+            AddBattleEvent();
             BattleManager.Instance.livePlayer = this;
         }
 
-        public void AddAttackEvent()
+        // 장비 인챈트에 효과가 있는 경우 이벤트를 구독해줍니다.
+        public void AddBattleEvent()
         {
             PlayerStatus status = (battleStatus.status as PlayerStatus);
 
@@ -56,11 +62,7 @@ namespace RPG.Battle.Control
             BattleManager.BattleUI.InitAbility(status.currentHelmet, status.currentPants, battleStatus);
         }
 
-        public override void DeadController()
-        {
-            base.DeadController();
-        }
-
+        // 가장 가까운 적을 지정합니다.
         public override bool SetTarget(out Controller controller)
         {
             controller = BattleManager.Instance.ReturnNearDistanceController<EnemyController>(transform);
@@ -73,9 +75,11 @@ namespace RPG.Battle.Control
             return (controller != null);
         }
 
+        // 엔딩시 행동입니다.
         protected override void Ending()
         {
             base.Ending();
+            // 모든 디버프를 제거하고 승리 애니메이션을 취합니다.
             battleStatus.RemoveAllDebuff();
             animator.SetTrigger("Win");
         }

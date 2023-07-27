@@ -32,7 +32,7 @@ namespace RPG.Battle.AI
         public void OnStart()
         {
             // 이동이 시작되면 AI상태를 추적상태로 변경해주며, 이동 애니메이션으로 변경합니다.
-            controller.currentAIState = AIState.Chase;
+            controller.currentState = AIState.Chase;
             movement.isMove = true;
             controller.animator.SetTrigger("Move");
         }

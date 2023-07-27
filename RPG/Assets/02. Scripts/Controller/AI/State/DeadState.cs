@@ -22,7 +22,7 @@ namespace RPG.Battle.AI
         public void OnStart()
         {
             // 죽음 상태에 진입하면 현재 AI 상태를 죽음상태로 변경해줍니다.
-            controller.currentAIState = AIState.Dead;
+            controller.currentState = AIState.Dead;
             deadTimer = 0f;
             callDeadEvent = true;
             // 공격하는 도중이었다면 공격을 취소하고 죽음 애니메이션을 보여줍니다.
@@ -31,6 +31,7 @@ namespace RPG.Battle.AI
             // 네브메쉬를 꺼줍니다.
             controller.nav.enabled = false;
 
+            // TODO : 죽음 상태가 할 행동은 아님
             if (controller is EnemyController)
             {
                 // 만약 적 컨트롤러였다면 아이템을 루팅합니다.

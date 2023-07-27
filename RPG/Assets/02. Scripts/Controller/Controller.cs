@@ -11,39 +11,45 @@ using RPG.Battle.UI;
 using RPG.Character.Status;
 using RPG.Main.Audio;
 
+/*
+ *  전투 시 캐릭터의 동작을 수행하는 컨트롤러
+ */
+
 namespace RPG.Battle.Control
 {
     public abstract class Controller : MonoBehaviour
     {
         // Component
-        public CharacterUI ui;
-        public Animator animator;
-        public NavMeshAgent nav;
-        public BattleStatus battleStatus;
+        public CharacterUI ui;              // 캐릭터 UI
+        public Animator animator;           // 캐릭터 애니메이터
+        public NavMeshAgent nav;            // 캐릭터 네브메쉬에이전트
+        public BattleStatus battleStatus;   // 캐릭터 스탯
 
         // AI State
-        public StateContext stateContext;
-        public IdelState idleState;
-        public ChaseState chaseState;
-        public AttackState attackState;
-        public DeadState deadState;
-        public DebuffState debuffState;
+        public StateContext stateContext;   // 상태 관리를 담당하는 컨택스트
+        public IdelState idleState;         // 유휴 상태 동작
+        public ChaseState chaseState;       // 추적 상태 동작
+        public AttackState attackState;     // 공격 상태 동작
+        public DeadState deadState;         // 죽음 상태 동작
+        public DebuffState debuffState;     // 디버프 상태 동작
 
         // Behaviour
-        public Movement movement;
-        public Attack attack;
+        public Movement movement;   // 이동 행동
+        public Attack attack;       // 공격 행동
 
         // Battle
-        public Controller target;
-        public AIState currentAIState;
+        public Controller target;       // 추적 타겟
+        public AIState currentState;  // 현재 상태
 
         private void Awake()
         {
+            // 컨트롤러 생성시 각 동작과 상태를 생성합니다.
             SetUp();
         }
 
         private void OnEnable()
         {
+            // 컨트롤러가 활성화되면 스탯, UI, 이벤트를 세팅합니다.
             battleStatus.Init();
             ui.Init();
             Init();
@@ -51,6 +57,7 @@ namespace RPG.Battle.Control
             {
                 return;
             }
+            // 이벤트 버스에 전투 상태에 따른 메서드를 구독합니다.
             BattleManager.Instance.SubscribeEvent(BattleSceneState.Win, Win);
             BattleManager.Instance.SubscribeEvent(BattleSceneState.Defeat, Defeat);
             BattleManager.Instance.SubscribeEvent(BattleSceneState.Ready, Ready);
@@ -62,6 +69,7 @@ namespace RPG.Battle.Control
 
         private void OnDisable()
         {
+            // 컨트롤러가 비활성화되면 스탯, UI 이벤트를 꺼줍니다.
             battleStatus.Release();
             ui.ReleaseUI();
             Release();
@@ -69,6 +77,7 @@ namespace RPG.Battle.Control
             {
                 return;
             }
+            // 이벤트 버스에 등록한 메서드를 구독해제합니다.
             BattleManager.Instance.UnsubscribeEvent(BattleSceneState.Win, Win);
             BattleManager.Instance.UnsubscribeEvent(BattleSceneState.Defeat, Defeat);
             BattleManager.Instance.UnsubscribeEvent(BattleSceneState.Ready, Ready);
@@ -107,6 +116,7 @@ namespace RPG.Battle.Control
             debuffState = new DebuffState(this);
         }
 
+        // 활성화 될 때 초기화합니다.
         public virtual void Init()
         {
             attack.canAttack = true;
@@ -114,6 +124,7 @@ namespace RPG.Battle.Control
             animator.Rebind();
 
             RuntimeAnimatorController rc = animator.runtimeAnimatorController;
+            // 현재 공격 애니메이션의 길이를 체크합니다.
             foreach (var item in rc.animationClips)
             {
                 if (item.name == "Attack")
@@ -123,57 +134,74 @@ namespace RPG.Battle.Control
                 }
             }
 
+            // 행동의 수치를 업데이트합니다.
             battleStatus.UpdateBehaviour();
             battleStatus.currentState = CombatState.Default;
         }
 
+        // 비활성화 될 때 행동입니다.
         public virtual void Release()
         {
         }
         #endregion
 
         #region BattleSceneState EventMethod
+        // 전투에서 승리합니다.
         public void Win()
         {
+            // 대상지정과 이동행동을 취소합니다.
             target = null;
             movement.ResetNav();
+            // 모든 디버프를 제거하고 이벤트를 중단합니다.
             battleStatus.StopAllDebuff();
             battleStatus.RemoveAllDebuff();
             StopCoroutine(battleStatus.perSecCoroutine);
         }
 
+        // 전투에서 패배합니다.
         public void Defeat()
         {
+            // 대상지정과 이동행동을 취소합니다.
             target = null;
             movement.ResetNav();
+            // 모든 디버프를 제거하고 이벤트를 중단합니다.
             battleStatus.StopAllDebuff();
             battleStatus.RemoveAllDebuff();
             StopCoroutine(battleStatus.perSecCoroutine);
         }
 
+        // 전투를 준비합니다.
         public void Ready()
         {
+            // 대상지정과 이동행동을 취소합니다.
             target = null;
             movement.ResetNav();
         }
 
+        // 전투를 수행합니다.
         public void Battle()
         {
+            // 스킬 이벤트를 활성화하고, 중단했던 디버프를 다시 활성화합니다.
             animator.speed = 1;
             StartCoroutine(battleStatus.perSecCoroutine);
             StartCoroutine(movement.moveEventCorotine);
             battleStatus.ReStartAllDebuff();
         }
 
+        // 전투를 잠시 중단합니다.
         public void Pause()
         {
+            // 동작중이었던 애니메이터를 멈추게합니다.
             animator.speed = 0;
+            // 스킬 이벤트를 활성화하고 디버프를 중단합니다.
             StopCoroutine(battleStatus.perSecCoroutine);
             StopCoroutine(movement.moveEventCorotine);
             battleStatus.StopAllDebuff();
+            // 이동중이었다면 이동을 취소합니다.
             movement.ResetNav();
         }
 
+        // 엔딩 시 행동
         protected virtual void Ending()
         {
         }
@@ -230,6 +258,7 @@ namespace RPG.Battle.Control
 
         #endregion
 
+        // 공격을 중단합니다.
         public void StopAttack()
         {
             if (attack.isAttack)
@@ -238,6 +267,7 @@ namespace RPG.Battle.Control
             }
         }
 
+        // 컨트롤러의 죽음을 전투 매니저에 알려줍니다.
         public virtual void DeadController()
         {
             BattleManager.Instance.CharacterDead(this);
@@ -248,8 +278,10 @@ namespace RPG.Battle.Control
         /// </summary>
         /// <param name="controller"></param>
         /// <returns></returns>
+        // 대상을 지정합니다.
         public abstract bool SetTarget(out Controller controller);
 
+        // 공격 애니메이션 이벤트 메서드입니다.
         public void AttackEvent()
         {
             if (target == null) return;

@@ -29,7 +29,7 @@ namespace RPG.Battle.AI
         public void OnStart()
         {
             // 공격 상태에 진입했다면 현재 AI상태를 공격상태로 변경해줍니다.
-            controller.currentAIState = AIState.Attack;
+            controller.currentState = AIState.Attack;
         }
 
         public void OnUpdate()
