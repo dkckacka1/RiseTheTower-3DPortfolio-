@@ -23,7 +23,7 @@
 
 빌드 파일
 ---
-[구들 드라이브 다운로드 링크(현재 없음)]()
+[구들 드라이브 다운로드 링크](https://drive.google.com/file/d/1xUYyQ02r2opD2nRvOs4im8ZFvO6rDcBF/view?usp=drive_link)
 
 
 사용 서드파티
