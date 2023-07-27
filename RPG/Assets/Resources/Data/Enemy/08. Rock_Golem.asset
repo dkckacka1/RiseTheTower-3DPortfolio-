@@ -27,7 +27,7 @@ MonoBehaviour:
   decreseCriticalDamage: 0
   evasionCritical: 0
   movementSpeed: 2
-  dropEnergy: 80
+  dropEnergy: 150
   dropitems:
   - itemType: 2
     percent: 100

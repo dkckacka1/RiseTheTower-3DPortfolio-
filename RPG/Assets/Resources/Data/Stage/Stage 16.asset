@@ -15,4 +15,4 @@ MonoBehaviour:
   ID: 16
   playerSpawnPosition: {x: 20, y: 0, z: 0}
   enemyDatas: 09000000090000000900000009000000
-  ConsumEnergy: 10
+  ConsumEnergy: 4500
