@@ -18,12 +18,12 @@
 
 포트폴리오 영상
 ---
-[유튜브 영상 링크(현재 없음)]()
+[유튜브 영상 링크](https://youtu.be/K_3etDquoiI)
 
 
 빌드 파일
 ---
-[구들 드라이브 다운로드 링크](https://drive.google.com/file/d/1xUYyQ02r2opD2nRvOs4im8ZFvO6rDcBF/view?usp=drive_link)
+[구들 드라이브 다운로드 링크](https://drive.google.com/file/d/1qSuFW2CfGxNXUO3ecfuxjRgxlbR9l___/view?usp=sharing)
 
 
 사용 서드파티
