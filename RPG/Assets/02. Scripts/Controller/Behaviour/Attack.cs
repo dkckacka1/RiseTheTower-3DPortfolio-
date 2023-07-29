@@ -71,11 +71,10 @@ namespace RPG.Battle.Behaviour
             }
 
             // 방어도 계산식을 적용합니다.
-            float defenceAverage = 1 - (target.status.DefencePoint / 100);
+            float defenceAverage = (target.status.DefencePoint / 300);
 
             // 최소 피해량은 피해량의 10%
-            if (defenceAverage >= 1)
-                defenceAverage = 0.9f;
+            defenceAverage = 1 - Mathf.Clamp(defenceAverage, 0, 0.9f);
 
             // 공격합니다.
             if (AttackChangeCalc(character, target))
@@ -118,6 +117,7 @@ namespace RPG.Battle.Behaviour
             //    $"방어율 : {defenceAverage * 100}%" +
             //    $"실제 데미지 수치 : {(int)(damage * defenceAverage)}");
 
+            Debug.Log((int)(damage * defenceAverage));
             return (int)(damage * defenceAverage);
         }
 

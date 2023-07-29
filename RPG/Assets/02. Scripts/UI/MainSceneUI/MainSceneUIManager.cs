@@ -71,6 +71,79 @@ namespace RPG.Main.UI
         private void OnGUI()
         {
             // 치트용 버튼을 추가합니다.
+            if (GUI.Button(new Rect(10, 100, 80, 80), "최강 장비로 변경"))
+            {
+                {
+                    {
+                        var weapon = GameManager.Instance.Player.currentWeapon;
+                        GameManager.Instance.GetEquipmentData(199, out WeaponData weaponData);
+                        weapon.ChangeData(weaponData);
+                        weapon.Incant(GameManager.Instance.incantDic[5]);
+                        weapon.Incant(GameManager.Instance.incantDic[6]);
+                        for (int i = 0; i < 10; i++)
+                        {
+                            weapon.ReinforceItem();
+                        }
+                        appearance.EquipWeapon(GameManager.Instance.Player.currentWeapon.weaponApparenceID, GameManager.Instance.Player.currentWeapon.handleType);
+                    }
+
+                    {
+                        var armor = GameManager.Instance.Player.currentArmor;
+                        GameManager.Instance.GetEquipmentData(210, out ArmorData armorData);
+                        armor.ChangeData(armorData);
+                        armor.Incant(GameManager.Instance.incantDic[101]);
+                        armor.Incant(GameManager.Instance.incantDic[104]);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            armor.ReinforceItem();
+                        }
+                    }
+
+                    {
+                        var helmet = GameManager.Instance.Player.currentHelmet;
+                        GameManager.Instance.GetEquipmentData(309, out HelmetData helmetData);
+                        helmet.ChangeData(helmetData);
+                        helmet.Incant(GameManager.Instance.incantDic[203]);
+                        helmet.Incant(GameManager.Instance.incantDic[204]);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            helmet.ReinforceItem();
+                        }
+                    }
+
+                    {
+                        var pants = GameManager.Instance.Player.currentPants;
+                        GameManager.Instance.GetEquipmentData(405, out PantsData pantsData);
+                        pants.ChangeData(pantsData);
+                        pants.Incant(GameManager.Instance.incantDic[301]);
+                        pants.Incant(GameManager.Instance.incantDic[304]);
+                        for (int i = 0; i < 30; i++)
+                        {
+                            pants.ReinforceItem();
+                        }
+                    }
+
+                    GameManager.Instance.UserInfo.lastedArmorID = 210;
+                    GameManager.Instance.UserInfo.armorPrefixIncantID = 101;
+                    GameManager.Instance.UserInfo.armorSuffixIncantID = 104;
+                    GameManager.Instance.UserInfo.armorReinforceCount = 30;
+
+                    GameManager.Instance.UserInfo.lastedHelmetID = 309;
+                    GameManager.Instance.UserInfo.helmetPrefixIncantID = 204;
+                    GameManager.Instance.UserInfo.helmetSuffixIncantID = 203;
+                    GameManager.Instance.UserInfo.helmetReinforceCount = 30;
+
+                    GameManager.Instance.UserInfo.lastedPantsID = 405;
+                    GameManager.Instance.UserInfo.pantsPrefixIncantID = 301;
+                    GameManager.Instance.UserInfo.pantsSuffixIncantID = 304;
+                    GameManager.Instance.UserInfo.pantsReinforceCount = 30;
+                }
+
+
+                GameManager.Instance.Player.SetEquipment();
+                GameManager.Instance.UserInfo.UpdateUserinfoFromStatus(GameManager.Instance.Player);
+            }
+
             if (GUI.Button(new Rect(10, 190, 80, 80), "쿠폰 추가"))
             {
                 GameManager.Instance.UserInfo.itemReinforceTicket += 100;

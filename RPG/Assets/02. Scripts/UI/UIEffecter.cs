@@ -32,12 +32,12 @@ namespace RPG.Core
             this.gameObject.SetActive(true);
         }
 
-        //// 이펙트를 재생합니다.
-        //public virtual void StartEffect()
-        //{
-        //    effectCanvas.enabled = true;
-        //    isPlaying = true;
-        //}
+        // 이펙트를 재생합니다.
+        public virtual void StartEffect()
+        {
+            effectCanvas.enabled = true;
+            isPlaying = true;
+        }
 
         // 이펙트를 종료합니다.
         public virtual void EndEffect()

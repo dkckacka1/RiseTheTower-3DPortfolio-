@@ -33,7 +33,6 @@ public class WeaponIncant : Incant
     // 공격 시 나올 스킬 효과
     public virtual void AttackEvent(BattleStatus player, BattleStatus enemy)
     {
-        Debug.Log("AttackEvent is Nothing");
     }
 
         // 무기 인챈트의 증가 스텟 설명
