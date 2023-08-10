@@ -27,10 +27,10 @@
 
 빌드 파일
 ---
-[구들 드라이브 다운로드 링크](https://drive.google.com/file/d/1qSuFW2CfGxNXUO3ecfuxjRgxlbR9l___/view?usp=sharing)
+[구들 드라이브 다운로드 링크](https://drive.google.com/file/d/12zWWDYZ7dE3D2uxAFkWYfwVkTln61rEn/view?usp=sharing)
 
 
-[네이버MYBOX 다운로드 링크](http://naver.me/I5cKru9u)
+[네이버MYBOX 다운로드 링크](http://naver.me/FBJlkoQH)
 
 
 사용 서드파티
